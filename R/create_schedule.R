@@ -12,16 +12,17 @@
 #'
 #' # I need to pay my bills!
 #' rent <- create_item( name = "Rent"
-#'                    , amount = -666.67
-#'                    , day = "1"
+#'                    , amount = -800
+#'                    , day = 1
 #'                    , recurring = TRUE
 #'                    )
-#' groceries <- create_item( name = "Groceries"
-#'                         , amount = -333.33
-#'                         , day = "5"
-#'                         , recurring = TRUE
-#'                         )
-#' my_bills <- create_schedule(rent, groceries)
+#' internet <- create_item( name = "Internet"
+#'                        , amount = -100
+#'                        , day = 15
+#'                        , recurring = TRUE
+#'                        )
+#' my_bills <- create_schedule(rent, internet)
+#' my_bills
 
 create_schedule <- function(...) {
     items <- list(...)
@@ -38,8 +39,8 @@ create_schedule <- function(...) {
     }
 
     # Create schedule
-    schedule_df <- data.frame(do.call(rbind, items), stringsAsFactors=FALSE)
-    schedule_df <- data.frame(lapply(schedule_df, unlist), stringsAsFactors = FALSE)
+    items_dfs <- lapply(items, function(x) {x$df})
+    schedule_df <- do.call(rbind, items_dfs)
     schedule_df <- schedule_df[order(schedule_df$day), ]
     schedule <- list(df = schedule_df)
 

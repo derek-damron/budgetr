@@ -16,21 +16,22 @@
 #' # I need to pay my bills!
 #' paycheck <- create_item( name = "Paycheck"
 #'                        , amount = 1050
-#'                        , day = "1"
+#'                        , day = 1
 #'                        , recurring = TRUE
 #'                        )
 #' rent <- create_item( name = "Rent"
 #'                    , amount = -800
-#'                    , day = "1"
+#'                    , day = 1
 #'                    , recurring = TRUE
 #'                    )
-#' groceries <- create_item( name = "Groceries"
-#'                         , amount = -200
-#'                         , day = "5"
-#'                         , recurring = TRUE
-#'                         )
-#' my_bills <- create_schedule(paycheck, rent, groceries)
-#' my_budget <- create_budget(my_bills)
+#' internet <- create_item( name = "Internet"
+#'                        , amount = -100
+#'                        , day = 15
+#'                        , recurring = TRUE
+#'                        )
+#' my_bills <- create_schedule(paycheck, rent, internet)
+#' my_budget <- create_budget(my_bills, initial=500)
+#' my_budget
 
 create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
     # Check schedule

@@ -22,15 +22,16 @@ The output of \code{create_item} is a budget item.
 
 # I need to pay my bills!
 rent <- create_item( name = "Rent"
-                   , amount = -666.67
-                   , day = "1"
+                   , amount = -800
+                   , day = 1
                    , recurring = TRUE
                    )
-groceries <- create_item( name = "Groceries"
-                        , amount = -333.33
-                        , day = "5"
-                        , recurring = TRUE
-                        )
-my_bills <- create_schedule(rent, groceries)
+internet <- create_item( name = "Internet"
+                       , amount = -100
+                       , day = 15
+                       , recurring = TRUE
+                       )
+my_bills <- create_schedule(rent, internet)
+my_bills
 }
 

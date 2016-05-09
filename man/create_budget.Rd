@@ -7,7 +7,13 @@
 create_budget(schedule, start = Sys.Date(), end = start + 90, initial = 0)
 }
 \arguments{
-\item{...}{A series of budget items separated by commas.}
+\item{schedule}{A budget schedule.}
+
+\item{start}{The start date for the budget.  The default is today's date.}
+
+\item{end}{The end date for the budget.  The default is 90 days after today's date.}
+
+\item{initial}{The initial}
 }
 \value{
 The output of \code{create_item} is a budget item.
@@ -23,20 +29,21 @@ The output of \code{create_item} is a budget item.
 # I need to pay my bills!
 paycheck <- create_item( name = "Paycheck"
                        , amount = 1050
-                       , day = "1"
+                       , day = 1
                        , recurring = TRUE
                        )
 rent <- create_item( name = "Rent"
                    , amount = -800
-                   , day = "1"
+                   , day = 1
                    , recurring = TRUE
                    )
-groceries <- create_item( name = "Groceries"
-                        , amount = -200
-                        , day = "5"
-                        , recurring = TRUE
-                        )
-my_bills <- create_schedule(paycheck, rent, groceries)
-my_budget <- create_budget(my_bills)
+internet <- create_item( name = "Internet"
+                       , amount = -100
+                       , day = 15
+                       , recurring = TRUE
+                       )
+my_bills <- create_schedule(paycheck, rent, internet)
+my_budget <- create_budget(my_bills, initial=500)
+my_budget
 }
 

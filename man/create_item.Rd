@@ -28,8 +28,8 @@ The output of \code{create_item} is a budget item.
 
 # I need to pay my rent!
 rent <- create_item( name = "Rent"
-                   , amount = -666
-                   , day = "1"
+                   , amount = -800
+                   , day = 1
                    , recurring = TRUE
                    )
 rent

@@ -5,6 +5,6 @@
 #' @param x A budget.
 #' @export
 
-is.schedule <- function(x) {
+is.budget <- function(x) {
     is(x, "budget")
 }

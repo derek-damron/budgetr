@@ -4,10 +4,12 @@
 \alias{print.schedule}
 \title{Prints a clean version of a budget schedule}
 \usage{
-\method{print}{schedule}(x)
+\method{print}{schedule}(x, ...)
 }
 \arguments{
 \item{x}{A budget schedule.}
+
+\item{...}{Does nothing.  Included only to use the print generic.}
 }
 \description{
 \code{print.schedule} prints a clean version of a budget schedule.

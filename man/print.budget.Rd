@@ -4,10 +4,12 @@
 \alias{print.budget}
 \title{Prints a clean version of a budget}
 \usage{
-\method{print}{budget}(x)
+\method{print}{budget}(x, ...)
 }
 \arguments{
 \item{x}{A budget.}
+
+\item{...}{Does nothing.  Included only to use the print generic.}
 }
 \description{
 \code{print.budget} prints a clean version of a budget.

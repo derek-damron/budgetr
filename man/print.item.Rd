@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{A budget item.}
+
+\item{...}{Does nothing.  Included only to use the print generic.}
 }
 \description{
 \code{print.item} prints a clean version of a budget item.

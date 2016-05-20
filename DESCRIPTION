@@ -2,10 +2,11 @@ Package: budget
 Title: Simple framework for making budgets in R
 Version: 0.1
 Authors@R: person("Derek", "Damron", email = "damrondm@gmail.com", role = c("aut", "cre"))
-Description: Simple framework for making budgets in R
+Description: Simple framework for making budgets in R.
 Depends:
     R (>= 3.2.2)
 License: file LICENSE
 LazyData: true
 RoxygenNote: 5.0.1
+Suggests: testthat
 Imports: methods

@@ -6,7 +6,7 @@
 #' @param ... Does nothing.  Included only to use the print generic.
 #' @export
 
-print.item <- function(x) {
+print.item <- function(x, ...) {
     writeLines("budget item")
     print(x$df, row.names=FALSE)
     invisible(NULL)

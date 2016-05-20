@@ -4,7 +4,7 @@
 \alias{print.item}
 \title{Prints a clean version of a budget item}
 \usage{
-\method{print}{item}(x)
+\method{print}{item}(x, ...)
 }
 \arguments{
 \item{x}{A budget item.}

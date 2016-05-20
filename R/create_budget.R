@@ -6,7 +6,7 @@
 #' @param start The start date for the budget.  The default is today's date.
 #' @param end The end date for the budget.  The default is 90 days after today's date.
 #' @param initial The initial amount for the budget.  The default is 0.
-#' @return The output of \code{create_budget} is a budget item.
+#' @return The output of \code{create_budget} is a budget.
 #' @export
 #' @examples
 #' #####

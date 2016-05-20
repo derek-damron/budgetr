@@ -1,9 +1,9 @@
 #' Creates a budget schedule
 #'
-#' \code{create_item} returns a budget schedule.
+#' \code{create_schedule} returns a budget schedule.
 #'
 #' @param ... A series of budget items separated by commas.
-#' @return The output of \code{create_item} is a budget item.
+#' @return The output of \code{create_schedule} is a budget item.
 #' @export
 #' @examples
 #' #####

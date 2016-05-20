@@ -10,10 +10,10 @@ create_schedule(...)
 \item{...}{A series of budget items separated by commas.}
 }
 \value{
-The output of \code{create_item} is a budget item.
+The output of \code{create_schedule} is a budget item.
 }
 \description{
-\code{create_item} returns a budget schedule.
+\code{create_schedule} returns a budget schedule.
 }
 \examples{
 #####

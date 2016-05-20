@@ -1,12 +1,12 @@
-#' Creates a budget schedule
+#' Creates a budget
 #'
-#' \code{create_item} returns a budget schedule.
+#' \code{create_budget} returns a budget.
 #'
 #' @param schedule A budget schedule.
 #' @param start The start date for the budget.  The default is today's date.
 #' @param end The end date for the budget.  The default is 90 days after today's date.
-#' @param initial The initial
-#' @return The output of \code{create_item} is a budget item.
+#' @param initial The initial amount for the budget.  The default is 0.
+#' @return The output of \code{create_budget} is a budget item.
 #' @export
 #' @examples
 #' #####

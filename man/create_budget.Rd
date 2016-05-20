@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_budget.R
 \name{create_budget}
 \alias{create_budget}
-\title{Creates a budget schedule}
+\title{Creates a budget}
 \usage{
 create_budget(schedule, start = Sys.Date(), end = start + 90, initial = 0)
 }
@@ -13,13 +13,13 @@ create_budget(schedule, start = Sys.Date(), end = start + 90, initial = 0)
 
 \item{end}{The end date for the budget.  The default is 90 days after today's date.}
 
-\item{initial}{The initial}
+\item{initial}{The initial amount for the budget.  The default is 0.}
 }
 \value{
-The output of \code{create_item} is a budget item.
+The output of \code{create_budget} is a budget item.
 }
 \description{
-\code{create_item} returns a budget schedule.
+\code{create_budget} returns a budget.
 }
 \examples{
 #####

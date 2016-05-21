@@ -34,7 +34,7 @@ create_schedule <- function(...) {
 
     # Check that all args are items
     items_check <- sapply(items, is.item)
-    if (!any(items_check)) {
+    if (any(!items_check)) {
         stop("At least one of the objects provided isn't a budget item", call.=FALSE)
     }
 

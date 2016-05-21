@@ -5,13 +5,12 @@ amount <- -800
 day <- 1
 recurring <- TRUE
 
-rent <- create_item(name, amount, day, recurring)
-
 test_that("Check - name", {
   expect_error(create_item(),
                "Please provide a name for the budget item")
   expect_error(create_item(name=1:2),
                "name must be a single value")
+  rent <- create_item(1, amount, day, recurring)
   expect_identical(rent$df,
                    data.frame( name = as.character(1)
                              , amount = amount

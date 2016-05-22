@@ -38,9 +38,9 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
     if (missing(schedule)) {
         stop("Please provide a schedule for your budget", call.=FALSE)
     } else if (length(schedule) != 1) {
-        stop("Only one budget schedule should be provided", call.=FALSE)
+        stop("Only one schedule should be provided", call.=FALSE)
     } else if (!is.schedule(schedule)) {
-        stop("The object provided is not a budget schedule", call.=FALSE)
+        stop("The object provided is not a schedule", call.=FALSE)
     }
 
     # Check start
@@ -75,6 +75,7 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
                                 , name = "Initial Amount"
                                 , amount = initial
                                 , recurring = FALSE
+                                , stringsAsFactors = FALSE
                                 )
     # Create budget template
     budget <- data.frame(date = seq(start, end, by=1))

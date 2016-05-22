@@ -14,12 +14,12 @@ internet <- create_item( name = "Internet"
 my_bills <- create_schedule(rent, internet)
 
 test_that("Check", {
-  expect_output(my_bills,
+  expect_output(print(my_bills),
                "budget schedule")
-  expect_output(my_bills,
+  expect_output(print(my_bills),
                "name amount day recurring")
-  expect_output(my_bills,
+  expect_output(print(my_bills),
                "Rent[ ]+-800[ ]+1[ ]+TRUE")
-  expect_output(my_bills,
+  expect_output(print(my_bills),
                "Internet[ ]+-100[ ]+15[ ]+TRUE")
 })

@@ -16,7 +16,7 @@ create_budget(schedule, start = Sys.Date(), end = start + 90, initial = 0)
 \item{initial}{The initial amount for the budget.  The default is 0.}
 }
 \value{
-The output of \code{create_budget} is a budget item.
+The output of \code{create_budget} is a budget.
 }
 \description{
 \code{create_budget} returns a budget.

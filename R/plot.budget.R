@@ -3,6 +3,7 @@
 #' \code{plot.budget} plots a budget object.
 #'
 #' @param x A budget.
+#' @param ... Does nothing.  Included only to use the plot generic.
 #' @return The output of \code{plot.budget} is a plot of a budget.
 #' @export
 #' @examples

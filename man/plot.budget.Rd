@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{A budget.}
+
+\item{...}{Does nothing.  Included only to use the plot generic.}
 }
 \value{
 The output of \code{plot.budget} is a plot of a budget.

@@ -30,7 +30,7 @@
 #' my_budget <- create_budget(my_bills, initial=500)
 #' plot(my_budget)
 
-plot.budget <- function(x) {
+plot.budget <- function(x, ...) {
     # Check schedule
     if (missing(x)) {
         stop("Please provide a budget to plot", call.=FALSE)

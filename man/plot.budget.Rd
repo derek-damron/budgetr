@@ -4,7 +4,7 @@
 \alias{plot.budget}
 \title{Plots a budget}
 \usage{
-\method{plot}{budget}(x)
+\method{plot}{budget}(x, ...)
 }
 \arguments{
 \item{x}{A budget.}

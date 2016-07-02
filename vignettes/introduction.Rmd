@@ -1,0 +1,92 @@
+---
+title: "Introduction to budget"
+author: "Derek Damron"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_float: true
+    css: css/vignette.css
+vignette: >
+  %\VignetteIndexEntry{Introduction to budget}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo=FALSE}
+# Load libraries
+library(budget)
+library(pander)
+library(knitr)
+```
+
+## What is budget?
+
+*budget*, as you might have guessed, is an R package that helps you easily create budgets.
+
+This introductory vignette provides a brief description of the functions provided by *budget* along with some simple examples on how to construct your budget.  Please refer to the function documentation for more technical information on each of these functions.
+
+## Deconstructing a Budget
+
+*budget* makes it easy to extend your recurring monthly cash flow out over time.  To do this, *budget* uses three primary abstractions:
+
+1. **Items**: The individual pieces that make up your budget.
+    - E.g. pay checks, rent, groceries
+2. **Schedules**: A collection of **items** that detail your cash flow.
+3. **Budgets**: This is a **schedule** that has been applied over a set period of time.
+
+## A Quick Example
+
+Let's consider a simple example to illustrate these abstractions.
+
+Say that we have three things that constitute our monthly budgets:
+
+1. Our monthly paycheck paid on the first day of the month
+2. Our rent payment due on the first day of the month
+3. Our internet bill due on the fifteenth of the month
+
+Our first step in budgeting is to create the items themselves, which we can do with the `create_item` function:
+
+```{r}
+paycheck <- create_item( name = "Paycheck"
+                       , amount = 1050
+                       , day = 1
+                       , recurring = TRUE
+                       )
+rent <- create_item( name = "Rent"
+                   , amount = -800
+                   , day = 1
+                   , recurring = TRUE
+                   )
+internet <- create_item( name = "Internet"
+                       , amount = -100
+                       , day = 15
+                       , recurring = TRUE
+                       )
+```
+
+Now we need to create a schedule out of these items, which we can do with the `create_schedule` function:
+
+```{r}
+our_schedule <- create_schedule(paycheck, rent, internet)
+```
+
+Lastly (but not leastly!) we need to create our budget, which we can do with the `create_budget` function:
+
+```{r}
+our_budget <- create_budget(our_schedule)
+```
+
+Let's see what it looks like!
+
+```{r}
+our_budget
+```
+
+Looks like we're netting $150 a month, but let's plot it out to get a visual!
+
+```{r}
+plot(our_budget)
+```
+
+Check out the documentation pages for these functions for more information on their defaults and uses!  More functions and flexibility will be coming soon!

@@ -8,6 +8,7 @@
 
 print.budget <- function(x, ...) {
     writeLines("budget")
-    print(x$df, row.names=FALSE)
+    x_df <- subset(x$df, select=c(date, name, balance))
+    print(x_df, row.names=FALSE)
     invisible(NULL)
 }

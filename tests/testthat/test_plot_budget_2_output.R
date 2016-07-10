@@ -1,4 +1,4 @@
-context("plot_budget")
+context("plot_budget - Output")
 
 paycheck <- create_item( name = "Paycheck"
                        , amount = 1050
@@ -24,4 +24,5 @@ my_budget <- create_budget( my_bills
 
 test_that("Check", {
   expect_silent(plot.budget(my_budget))
+  dev.off()
 })

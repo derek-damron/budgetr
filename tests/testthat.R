@@ -1,4 +1,4 @@
 library(testthat)
-library(budget)
+library(budgetr)
 
-test_check("budget")
+test_check("budgetr")

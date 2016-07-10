@@ -1,5 +1,5 @@
 ---
-title: "Introduction to budget"
+title: "Introduction to budgetr"
 author: "Derek Damron"
 date: "`r Sys.Date()`"
 output:
@@ -8,27 +8,27 @@ output:
     toc_float: true
     css: css/vignette.css
 vignette: >
-  %\VignetteIndexEntry{Introduction to budget}
+  %\VignetteIndexEntry{Introduction to budgetr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, echo=FALSE}
 # Load libraries
-library(budget)
+library(budgetr)
 library(pander)
 library(knitr)
 ```
 
-## What is budget?
+## What is budgetr?
 
-*budget*, as you might have guessed, is an R package that helps you easily create budgets.
+*budgetr*, as you might have guessed, is an R package that helps you easily create budgets.
 
-This introductory vignette provides a brief description of the functions provided by *budget* along with some simple examples on how to construct your budget.  Please refer to the function documentation for more technical information on each of these functions.
+This introductory vignette provides a brief description of the functions provided by *budgetr* along with some simple examples on how to construct your budget.  Please refer to the function documentation for more technical information on each of these functions.
 
 ## Deconstructing a Budget
 
-*budget* makes it easy to extend your recurring monthly cash flow out over time.  To do this, *budget* uses three primary abstractions:
+*budgetr* makes it easy to extend your recurring monthly cash flow out over time.  To do this, *budgetr* uses three primary abstractions:
 
 1. **Items**: The individual pieces that make up your budget.
     - E.g. pay checks, rent, groceries

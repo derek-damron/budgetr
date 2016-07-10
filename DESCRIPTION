@@ -1,4 +1,4 @@
-Package: budget
+Package: budgetr
 Title: Simple framework for making budgets in R
 Version: 0.1
 Authors@R: person("Derek", "Damron", email = "damrondm@gmail.com", role = c("aut", "cre"))

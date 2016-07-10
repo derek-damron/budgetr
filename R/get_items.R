@@ -25,9 +25,9 @@
 #' # Get only items matching "rent"
 #' get_items("rent")
 
-get_items <- function(pattern=".") {
+get_items <- function(pattern=".", env=parent.frame()) {
     # Get objects matching pattern
-    ls_pattern <- ls(parent.frame(), pattern=pattern)
+    ls_pattern <- ls(env, pattern=pattern)
 
     # Error if no objects
     if (length(ls_pattern) == 0) {
@@ -38,7 +38,7 @@ get_items <- function(pattern=".") {
     }
 
     # Get names of item objects
-    ls_items <- sapply(ls_pattern, function(x) is.item(get(x)))
+    ls_items <- sapply(ls_pattern, function(x) is.item(get(x, env)))
     ls_items <- names(ls_items[ls_items])
 
     # Error if no items
@@ -50,7 +50,7 @@ get_items <- function(pattern=".") {
     }
 
     # Create list of items
-    list_items <- lapply(ls_items, function(x) get(x))
+    list_items <- lapply(ls_items, function(x) get(x, env))
     names(list_items) <- ls_items
     list_items
 }

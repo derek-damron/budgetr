@@ -4,11 +4,13 @@
 \alias{get_items}
 \title{Gets items in the current environment}
 \usage{
-get_items(pattern = ".")
+get_items(pattern = ".", env = parent.frame())
 }
 \arguments{
 \item{pattern}{A regular expression describing the names of objects to check.  Defaults to
 all objects}
+
+\item{env}{The environment to look for items.  Defaults to the calling environment.}
 }
 \value{
 The output of \code{create_item} is a list of budget items matching the specified pattern.

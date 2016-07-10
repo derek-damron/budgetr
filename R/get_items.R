@@ -4,6 +4,7 @@
 #'
 #' @param pattern A regular expression describing the names of objects to check.  Defaults to
 #'     all objects
+#' @param env The environment to look for items.  Defaults to the calling environment.
 #' @return The output of \code{create_item} is a list of budget items matching the specified pattern.
 #' @export
 #' @examples

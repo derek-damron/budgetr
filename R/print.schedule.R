@@ -7,7 +7,7 @@
 #' @export
 
 print.schedule <- function(x, ...) {
-    writeLines("budget schedule")
+    writeLines("schedule (budgetr)")
     print(x$df, row.names=FALSE)
     invisible(NULL)
 }

@@ -7,7 +7,7 @@
 is.schedule(x)
 }
 \arguments{
-\item{x}{A budget schedule.}
+\item{x}{An object.}
 }
 \description{
 \code{is.schedule} Checks if an object is a budget schedule.

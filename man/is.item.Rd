@@ -7,7 +7,7 @@
 is.item(x)
 }
 \arguments{
-\item{x}{A budget item.}
+\item{x}{An object.}
 }
 \description{
 \code{is.item} Checks if an object is a budget item.

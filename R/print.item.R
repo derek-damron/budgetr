@@ -7,7 +7,7 @@
 #' @export
 
 print.item <- function(x, ...) {
-    writeLines("budget item")
+    writeLines("item (budgetr)")
     print(x$df, row.names=FALSE)
     invisible(NULL)
 }

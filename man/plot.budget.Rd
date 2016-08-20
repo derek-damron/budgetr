@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{A budget.}
 
-\item{...}{Does nothing.  Included only to use the plot generic.}
+\item{...}{Other arguments to pass to plot().}
 }
 \value{
 The output of \code{plot.budget} is a plot of a budget.
@@ -18,28 +18,25 @@ The output of \code{plot.budget} is a plot of a budget.
 \code{plot.budget} plots a budget object.
 }
 \examples{
-#####
-# Common use cases
-#
-
-# I need to pay my bills!
+# Create a paycheck item
 paycheck <- create_item( name = "Paycheck"
-                       , amount = 1050
+                       , amount = 1000
                        , day = 1
                        , recurring = TRUE
                        )
+# Create a rent item
 rent <- create_item( name = "Rent"
-                   , amount = -800
-                   , day = 1
+                   , amount = -500
+                   , day = 5
                    , recurring = TRUE
                    )
-internet <- create_item( name = "Internet"
-                       , amount = -100
-                       , day = 15
-                       , recurring = TRUE
-                       )
-my_bills <- create_schedule(paycheck, rent, internet)
-my_budget <- create_budget(my_bills, initial=500)
+
+# Create a schedule
+my_schedule <- create_schedule(paycheck, rent)
+
+# Create a budget
+my_budget <- create_budget(my_bills, initial=1000)
+# Plot
 plot(my_budget)
 }
 

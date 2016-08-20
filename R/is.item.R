@@ -2,7 +2,7 @@
 #'
 #' \code{is.item} Checks if an object is a budget item.
 #'
-#' @param x A budget item.
+#' @param x An object.
 #' @export
 
 is.item <- function(x) {

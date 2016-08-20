@@ -9,16 +9,22 @@
 #' @return The output of \code{create_item} is a budget item.
 #' @export
 #' @examples
-#' #####
-#' # Common use cases
-#' #
+#' # Create a paycheck item
+#' paycheck <- create_item( name = "Paycheck"
+#'                        , amount = 1000
+#'                        , day = 1
+#'                        , recurring = TRUE
+#'                        )
+#' # Inspect
+#' paycheck
 #'
-#' # I need to pay my rent!
+#' # Create a rent item
 #' rent <- create_item( name = "Rent"
-#'                    , amount = -800
-#'                    , day = 1
+#'                    , amount = -500
+#'                    , day = 5
 #'                    , recurring = TRUE
 #'                    )
+#' # Inspect
 #' rent
 
 create_item <- function(name, amount, day, recurring) {

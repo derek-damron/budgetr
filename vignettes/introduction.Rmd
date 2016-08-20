@@ -33,31 +33,34 @@ This introductory vignette provides a brief description of the functions provide
 1. **Items**: The individual pieces that make up your budget.
     - E.g. pay checks, rent, groceries
 2. **Schedules**: A collection of **items** that detail your cash flow.
-3. **Budgets**: This is a **schedule** that has been applied over a set period of time.
+3. **Budgets**: A **schedule** that has been applied over a set period of time.
 
 ## A Quick Example
 
 Let's consider a simple example to illustrate these abstractions.
 
-Say that we have three things that constitute our monthly budgets:
+Say that you have three things that constitute your monthly budget:
 
-1. Our monthly paycheck paid on the first day of the month
-2. Our rent payment due on the first day of the month
-3. Our internet bill due on the fifteenth of the month
+1. Your monthly paycheck paid on the first day of each month
+2. Your rent payment due on the fifth day of each month
+3. Your internet bill due on the fifteenth of each month
 
-Our first step in budgeting is to create the items themselves, which we can do with the `create_item` function:
+Your first step in budgeting is to create the items themselves, which you can do with the `create_item` function:
 
 ```{r}
+# Create a paycheck item
 paycheck <- create_item( name = "Paycheck"
-                       , amount = 1050
+                       , amount = 1000
                        , day = 1
                        , recurring = TRUE
                        )
+# Create a rent item
 rent <- create_item( name = "Rent"
-                   , amount = -800
-                   , day = 1
+                   , amount = -500
+                   , day = 5
                    , recurring = TRUE
                    )
+# Create an internet item
 internet <- create_item( name = "Internet"
                        , amount = -100
                        , day = 15
@@ -65,28 +68,28 @@ internet <- create_item( name = "Internet"
                        )
 ```
 
-Now we need to create a schedule out of these items, which we can do with the `create_schedule` function:
+Next you need to create a schedule out of these items, which you can do with the `create_schedule` function:
 
 ```{r}
-our_schedule <- create_schedule(paycheck, rent, internet)
+your_schedule <- create_schedule(paycheck, rent, internet)
 ```
 
-Lastly (but not leastly!) we need to create our budget, which we can do with the `create_budget` function:
+Lastly (but not leastly!) you need to create your budget, which you can do with the `create_budget` function:
 
 ```{r}
-our_budget <- create_budget(our_schedule)
+your_budget <- create_budget(your_schedule, initial=1000)
 ```
 
 Let's see what it looks like!
 
 ```{r}
-our_budget
+your_budget
 ```
 
-Looks like we're netting $150 a month, but let's plot it out to get a visual!
+Looks like you're netting $400 a month, but let's plot it out to get a visual!
 
 ```{r}
-plot(our_budget)
+plot(your_budget)
 ```
 
 Check out the documentation pages for these functions for more information on their defaults and uses!  More functions and flexibility will be coming soon!

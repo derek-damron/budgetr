@@ -2,7 +2,7 @@
 #'
 #' \code{is.schedule} Checks if an object is a budget schedule.
 #'
-#' @param x A budget schedule.
+#' @param x An object.
 #' @export
 
 is.schedule <- function(x) {

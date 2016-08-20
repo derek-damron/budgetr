@@ -19,17 +19,18 @@ The output of \code{create_item} is a list of budget items matching the specifie
 \code{get_items} returns a list of budget items matching the specified pattern.
 }
 \examples{
-# Create items
-rent <- create_item( name = "Rent"
-                   , amount = -800
-                   , day = 1
-                   , recurring = TRUE
-                   )
-internet <- create_item( name = "Internet"
-                       , amount = -100
-                       , day = 15
+# Create a paycheck item
+paycheck <- create_item( name = "Paycheck"
+                       , amount = 1000
+                       , day = 1
                        , recurring = TRUE
                        )
+# Create a rent item
+rent <- create_item( name = "Rent"
+                   , amount = -500
+                   , day = 5
+                   , recurring = TRUE
+                   )
 
 # Get all items
 get_items()

@@ -7,7 +7,7 @@
 #' @export
 
 print.budget <- function(x, ...) {
-    writeLines("budget")
+    writeLines("budget (budgetr)")
     x_df <- subset(x$df, select=c(date, name, balance))
     print(x_df, row.names=FALSE)
     invisible(NULL)

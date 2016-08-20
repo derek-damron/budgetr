@@ -24,7 +24,7 @@ my_budget <- create_budget( my_bills
 
 test_that("Check", {
   expect_output(print(my_budget),
-               "budget")
+               "budget (budgetr)", fixed=TRUE)
   expect_output(print(my_budget),
                "date[ ]+name[ ]+balance")
   expect_output(print(my_budget),

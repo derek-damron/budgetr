@@ -15,7 +15,7 @@ my_bills <- create_schedule(rent, internet)
 
 test_that("Check", {
   expect_output(print(my_bills),
-               "budget schedule")
+               "schedule (budgetr)", fixed=TRUE)
   expect_output(print(my_bills),
                "name amount day recurring")
   expect_output(print(my_bills),

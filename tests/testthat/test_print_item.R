@@ -8,7 +8,7 @@ rent <- create_item( name = "Rent"
 
 test_that("Check", {
   expect_output(print(rent),
-               "budget item")
+               "item (budgetr)", fixed=TRUE)
   expect_output(print(rent),
                "name amount day recurring")
   expect_output(print(rent),

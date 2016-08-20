@@ -39,7 +39,7 @@ rent <- create_item( name = "Rent"
 my_schedule <- create_schedule(paycheck, rent)
 
 # Create a budget
-my_budget <- create_budget(my_bills, initial=1000)
+my_budget <- create_budget(my_schedule, initial=1000)
 # Inspect
 my_budget
 }

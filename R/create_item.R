@@ -69,7 +69,7 @@ create_item <- function(name, amount, day, recurring) {
                          , amount = amount
                          , day = day
                          , recurring = recurring
-                         , stringsAsFactors=FALSE
+                         , stringsAsFactors = FALSE
                          )
     item <- list(df = item_df)
 

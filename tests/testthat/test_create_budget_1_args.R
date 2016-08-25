@@ -20,8 +20,6 @@ my_bills <- create_schedule(paycheck, rent, internet)
 test_that("Check - schedule", {
   expect_error(create_budget(),
                "Please provide a schedule for your budget")
-  expect_error(create_budget(1:2),
-               "Only one schedule should be provided")
   expect_error(create_budget(1),
                "The object provided is not a schedule")
 })

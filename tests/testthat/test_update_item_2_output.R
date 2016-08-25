@@ -1,4 +1,4 @@
-context('update_items - Output')
+context('update_item - Output')
 
 name <- "Rent"
 amount <- -500

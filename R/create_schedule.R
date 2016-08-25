@@ -2,7 +2,7 @@
 #'
 #' \code{create_schedule} returns a budget schedule.
 #'
-#' @param ... A series of budget items separated by commas.
+#' @param ... A series of budget items separated by commas or a single list of budget items.
 #' @return The output of \code{create_schedule} is a budget item.
 #' @export
 #' @examples
@@ -23,13 +23,24 @@
 #' my_schedule <- create_schedule(paycheck, rent)
 #' # Inspect
 #' my_schedule
+#'
+#' # Using a list of items
+#' my_schedule <- create_schedule(list(paycheck, rent))
+#' # Inspect
+#' my_schedule
 
 create_schedule <- function(...) {
+    # Check that something was provided
+    if (missing(...)) {
+        stop("Please provide at least one budget item", call.=FALSE)
+    }
+
+    # Convert ... to a list of items
     items <- list(...)
 
-    # Check that something was provided
-    if (length(items) < 1) {
-        stop("Please provide at least one budget item", call.=FALSE)
+    # Remove the double list structure if ... was a list rather than separate items
+    if (!is.item(items[[1]])) {
+        items <- items[[1]]
     }
 
     # Check that all args are items
@@ -43,6 +54,9 @@ create_schedule <- function(...) {
     schedule_df <- do.call(rbind, items_dfs)
     schedule_df <- schedule_df[order(schedule_df$day), ]
     schedule <- list(df = schedule_df)
+
+    # Save the item list
+    schedule$items <- items
 
     # Objectify!
     class(schedule) <- c("schedule", "list")

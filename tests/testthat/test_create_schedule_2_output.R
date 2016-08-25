@@ -1,24 +1,38 @@
 context('create_schedule - Output')
 
-rent <- create_item( name = "Rent"
-                   , amount = -800
-                   , day = 1
-                   , recurring = TRUE
-                   )
-internet <- create_item( name = "Internet"
-                       , amount = -100
-                       , day = 15
+paycheck <- create_item( name = "Paycheck"
+                       , amount = 1000
+                       , day = 1
                        , recurring = TRUE
                        )
-my_bills <- create_schedule(rent, internet)
+rent <- create_item( name = "Rent"
+                   , amount = -500
+                   , day = 5
+                   , recurring = TRUE
+                   )
+my_bills_items <- create_schedule(paycheck, rent)
 
-test_that("Check - Output", {
-  expect_identical(is.schedule(my_bills), TRUE)
-  expect_identical(is.list(my_bills), TRUE)
-  expect_identical(my_bills$df,
-                   data.frame( name = c("Rent", "Internet")
-                             , amount = c(-800, -100)
-                             , day = c("1", "15")
+test_that("Check - Items", {
+  expect_identical(is.schedule(my_bills_items), TRUE)
+  expect_identical(is.list(my_bills_items), TRUE)
+  expect_identical(my_bills_items$df,
+                   data.frame( name = c("Paycheck", "Rent")
+                             , amount = c(1000, -500)
+                             , day = c("1", "5")
+                             , recurring = c(TRUE, TRUE)
+                             , stringsAsFactors=FALSE
+                             ))
+})
+
+my_bills_list <- create_schedule(list(paycheck, rent))
+
+test_that("Check - List", {
+  expect_identical(is.schedule(my_bills_list), TRUE)
+  expect_identical(is.list(my_bills_list), TRUE)
+  expect_identical(my_bills_list$df,
+                   data.frame( name = c("Paycheck", "Rent")
+                             , amount = c(1000, -500)
+                             , day = c("1", "5")
                              , recurring = c(TRUE, TRUE)
                              , stringsAsFactors=FALSE
                              ))

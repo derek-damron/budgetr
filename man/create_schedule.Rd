@@ -7,7 +7,7 @@
 create_schedule(...)
 }
 \arguments{
-\item{...}{A series of budget items separated by commas.}
+\item{...}{A series of budget items separated by commas or a single list of budget items.}
 }
 \value{
 The output of \code{create_schedule} is a budget item.
@@ -31,6 +31,11 @@ rent <- create_item( name = "Rent"
 
 # Create a schedule
 my_schedule <- create_schedule(paycheck, rent)
+# Inspect
+my_schedule
+
+# Using a list of items
+my_schedule <- create_schedule(list(paycheck, rent))
 # Inspect
 my_schedule
 }

@@ -32,8 +32,6 @@ plot.budget <- function(x, ...) {
     # Check schedule
     if (missing(x)) {
         stop("Please provide a budget to plot", call.=FALSE)
-    } else if (length(x) != 1) {
-        stop("Only one budget should be provided", call.=FALSE)
     } else if (!is.budget(x)) {
         stop("The object provided is not a budget", call.=FALSE)
     }

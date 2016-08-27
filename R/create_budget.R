@@ -85,9 +85,17 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
     budget <- rbind(budget_initial, budget)
     # Calculate balance
     budget$balance <- cumsum(budget$amount)
+    # Clear row.names
+    row.names(budget) <- NULL
 
     # Objectify!
-    budget <- list(df = budget)
+    budget <- list( df = budget
+                  , args = list( start = start
+                               , end = end
+                               , initial = initial
+                               )
+                  , schedule = schedule
+                  )
     class(budget) <- c("budget", "list")
     budget
 }

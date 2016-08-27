@@ -17,7 +17,7 @@ update_schedule(schedule, add, remove)
 The output of \code{update_schedule} is a new budget schedule with the specified updates.
 }
 \description{
-\code{updates_schedule} returns an updated budget schedule.
+\code{update_schedule} returns an updated budget schedule.
 }
 \examples{
 # Create a paycheck item

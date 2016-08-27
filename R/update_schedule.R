@@ -1,6 +1,6 @@
 #' Updates a budget schedule
 #'
-#' \code{updates_schedule} returns an updated budget schedule.
+#' \code{update_schedule} returns an updated budget schedule.
 #'
 #' @param schedule The budget schedule to be updated.
 #' @param add A list of budget items to add to the schedule.

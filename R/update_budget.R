@@ -49,7 +49,7 @@ update_budget <- function(budget, start, end, initial) {
 
     # Check end
     if (missing(end)) {
-        end <- start + 90
+        end <- budget$args$end
     }
 
     # Check initial

@@ -9,7 +9,8 @@ create_item(name, amount, day, recurring)
 \arguments{
 \item{name}{A name describing the budget item.}
 
-\item{amount}{The amount associated with the budget item.}
+\item{amount}{The amount associated with the budget item.  Positive values result in addition
+and negative values result in subtraction.}
 
 \item{day}{The day associated with the budget item.  See Details for more information.}
 
@@ -20,6 +21,14 @@ The output of \code{create_item} is a budget item.
 }
 \description{
 \code{create_item} returns a budget item.
+}
+\details{
+An item's day argument must be one of these values:
+
+\itemize{
+  \item \strong{numeric}: An integer between 1 and 31 (depending on the month!)
+  \item \strong{character}: "last" (last day of the month)
+}
 }
 \examples{
 # Create a paycheck item

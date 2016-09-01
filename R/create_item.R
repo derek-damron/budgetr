@@ -2,8 +2,16 @@
 #'
 #' \code{create_item} returns a budget item.
 #'
+#' An item's day argument must be one of these values:
+#'
+#' \itemize{
+#'   \item \strong{numeric}: An integer between 1 and 31 (depending on the month!)
+#'   \item \strong{character}: "last" (last day of the month)
+#' }
+#'
 #' @param name A name describing the budget item.
-#' @param amount The amount associated with the budget item.
+#' @param amount The amount associated with the budget item.  Positive values result in addition
+#'   and negative values result in subtraction.
 #' @param day The day associated with the budget item.  See Details for more information.
 #' @param recurring Whether or not the budget item is recurring.
 #' @return The output of \code{create_item} is a budget item.

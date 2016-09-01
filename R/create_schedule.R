@@ -52,7 +52,7 @@ create_schedule <- function(...) {
     # Create schedule
     items_dfs <- lapply(items, function(x) {x$df})
     schedule_df <- do.call(rbind, items_dfs)
-    schedule_df <- schedule_df[order(as.numeric(schedule_df$day)), ]
+    #schedule_df <- schedule_df[order(as.numeric(schedule_df$day)), ]
     schedule <- list(df = schedule_df)
 
     # Save the item list

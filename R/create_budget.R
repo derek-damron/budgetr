@@ -64,31 +64,84 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
         stop("initial must be a numeric value", call.=FALSE)
     }
 
-    # Create initial row
-    budget_initial <- data.frame( day = as.character(as.numeric(format(start, "%d")))
-                                , date = start
-                                , name = "Initial Amount"
-                                , amount = initial
-                                , recurring = FALSE
-                                , stringsAsFactors = FALSE
-                                )
-    # Create budget template
-    budget <- data.frame(date = seq(start, end, by=1))
-    # Extract the day and remove leading zeros
-    budget$day <- format(budget$date, "%d")
-    budget$day <- as.character(as.numeric(budget$day))
-    # Merge in schedule
-    budget <- merge(budget, schedule$df, by="day")
-    # Sort chronologically
-    budget <- budget[order(budget$date), ]
+    #####
+    # Create the budget!
+    #
+
+    # Set up a data.frame with all days within the budget range
+    budget <- data.frame(budget_date = seq(start, end, by=1))
+    budget$budget_year <- as.numeric(format(budget$budget_date, "%Y"))
+    budget$budget_month <- as.numeric(format(budget$budget_date, "%m"))
+    budget$budget_day <- as.numeric(format(budget$budget_date, "%d"))
+
+    # Aggregate and calculate the first/last included day of each month
+    budget <- aggregate( budget_day ~ budget_year + budget_month
+                       , budget
+                       , function(x) c(first = min(x), last = max(x))
+                       )
+    budget <- as.data.frame(as.list(budget), stringsAsFactors = FALSE)
+    budget <- budget[order(budget$budget_year, budget$budget_month), ]
+    names(budget) <- sub(".", "_", names(budget), fixed = TRUE)
+
+    # Derive the actual last day of each month in the budget
+    budget$actual_day_last <- with(budget, last_day_of_month(budget_year, budget_month))
+
+    # Create a new set of rows for each month/year combination
+    budget <- budget[ rep( 1:nrow(budget)
+                         , each = nrow(schedule$df)
+                         ), ]
+
+    # Add schedule columns (thank you R recycling!)
+    budget <- cbind(budget, schedule$df)
+
+    # Convert day into a numeric value based on year, month, first day, and last day!
+    budget$day_mapped <- with(budget, map_days( budget_year
+                                              , budget_month
+                                              , budget_day_first
+                                              , budget_day_last
+                                              , day
+                                              ))
+
+    # Subset based on budget first/last days
+    budget <- subset(budget, day_mapped >= budget_day_first)
+    budget <- subset(budget, day_mapped <= budget_day_last)
+    # Subset based on actual last day
+    budget <- subset(budget, !(day == "last" & day_mapped != actual_day_last))
+
+    # Derive the date for each row
+    budget$date <- with(budget, as.Date( paste(budget_year, budget_month, day_mapped, sep="-")
+                                              , format = "%Y-%m-%d"
+                                              ))
+
+    # Subset and reorder columns
+    budget <- subset(budget, select=c( date
+                                     , name
+                                     , amount
+                                     , recurring
+                                     ))
+    # Initialize balance
+    budget$balance <- NA_real_
+
     # Add initial row
-    budget <- rbind(budget_initial, budget)
-    # Calculate balance
+    initial_row <- data.frame( date = start
+                             , name = "Initial Amount"
+                             , amount = initial
+                             , recurring = FALSE
+                             , balance = NA_real_
+                             , stringsAsFactors = FALSE
+                             )
+    budget <- rbind(initial_row, budget)
+
+    # Derive balance
     budget$balance <- cumsum(budget$amount)
-    # Clear row.names
+
+    # Reset row names
     row.names(budget) <- NULL
 
+    #####
     # Objectify!
+    #
+
     budget <- list( df = budget
                   , args = list( start = start
                                , end = end

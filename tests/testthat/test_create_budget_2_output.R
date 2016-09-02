@@ -22,7 +22,7 @@ my_budget <- create_budget( my_schedule
                           , end = as.Date("2016-03-02")
                           )
 
-test_that("Check - nothing", {
+test_that("Check", {
   expect_identical(is.budget(my_budget), TRUE)
   expect_identical(is.list(my_budget), TRUE)
   expect_identical(my_budget$df,

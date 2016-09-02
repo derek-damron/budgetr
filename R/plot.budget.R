@@ -37,16 +37,58 @@ plot.budget <- function(x, ...) {
     }
 
     # Rollup to the day level
-    x_rollup <- aggregate(balance ~ date, x$df, min)
+    x_rollup <- aggregate(amount ~ date, x$df, sum)
 
+    # Rederive balance
+    x_rollup$balance <- cumsum(x_rollup$amount)
+
+    #####
     # Plot!
+    #
+
+    # Step plot
     plot( x = x_rollup$date
         , y = x_rollup$balance
-        , type = "b"
-        , pch = 16
+        , type = "s"
         , xlab = "Date"
         , ylab = "Balance"
-        , ylim = c(0, 1.1 * max(x_rollup$balance))
+        , ylim = c( min(0, 1.1 * min(x_rollup$balance))
+                  , max(0, 1.1 * max(x_rollup$balance))
+                  )
         , ...
+        )
+
+    # Grey vertical line to designate zero
+    abline( h = 0
+          , col = "lightgrey"
+          )
+
+    # Grey vertical lines to designate months
+    abline( v = unique(x_rollup$date[format(x_rollup$date, format = "%d") == "01"])
+          , col = "lightgrey"
+          )
+
+    # Step plot
+    lines( x = x_rollup$date
+         , y = x_rollup$balance
+         , type = "s"
+         )
+
+    # >= 0 points
+    with( subset(x_rollup, balance >= 0)
+        , points( x = date
+                , y = balance
+                , pch = 16
+                , col = "green"
+                )
+        )
+
+    # < 0 points
+    with( subset(x_rollup, balance < 0)
+        , points( x = date
+                , y = balance
+                , pch = 16
+                , col = "red"
+                )
         )
 }

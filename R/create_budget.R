@@ -102,6 +102,9 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
                                               , day
                                               ))
 
+    # Remove rows where day_mapped is NA
+    budget <- subset(budget, !is.na(day_mapped))
+
     # Subset based on budget first/last days
     budget <- subset(budget, day_mapped >= budget_day_first)
     budget <- subset(budget, day_mapped <= budget_day_last)
@@ -112,6 +115,9 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
     budget$date <- with(budget, as.Date( paste(budget_year, budget_month, day_mapped, sep="-")
                                               , format = "%Y-%m-%d"
                                               ))
+
+    # Sort on date
+    budget <- budget[order(budget$date, decreasing = FALSE), ]
 
     # Subset and reorder columns
     budget <- subset(budget, select=c( date

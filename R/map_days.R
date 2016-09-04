@@ -44,6 +44,24 @@ map_days <- function(year, month, day_first, day_last, schedule_day) {
         stop("Please provide a schedule_day", call.=FALSE)
     }
 
+    # Dates
+    schedule_day <- tryCatch( as.Date(schedule_day)
+                            , error = function(e) schedule_day
+                            , warning = function(w) schedule_day
+                            )
+    if (is(schedule_day, "Date")) {
+        # Extract year and month
+        schedule_year <- as.numeric(format(schedule_day, format="%Y"))
+        schedule_month <- as.numeric(format(schedule_day, format="%m"))
+
+        # Compare
+        if (year == schedule_year & month == schedule_month) {
+            return(as.numeric(format(schedule_day, format="%d")))
+        } else {
+            return(NA_real_)
+        }
+    }
+
     # Numerics
     schedule_day <- tryCatch( as.numeric(schedule_day)
                             , error = function(e) schedule_day
@@ -52,8 +70,6 @@ map_days <- function(year, month, day_first, day_last, schedule_day) {
     if (is.numeric(schedule_day)) {
         return(schedule_day)
     }
-
-    # Dates
 
     # Characters
     if (schedule_day == "last") {

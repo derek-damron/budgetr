@@ -20,7 +20,12 @@ xmas_gifts <- create_item( name = "Christmas Gifts"
                          , day = "2015-12-20"
                          , recurring = FALSE
                          )
-my_schedule <- create_schedule(paycheck, rent, car, xmas_gifts)
+xmas_bonus <- create_item( name = "Christmas Bonus"
+                    , amount = 300
+                    , day = 25
+                    , recurring = FALSE
+                    )
+my_schedule <- create_schedule(paycheck, rent, car, xmas_gifts, xmas_bonus)
 my_budget <- create_budget( my_schedule
                           , initial = 1000
                           , start = as.Date("2015-12-15")
@@ -31,11 +36,11 @@ test_that("Check", {
   expect_identical(is.budget(my_budget), TRUE)
   expect_identical(is.list(my_budget), TRUE)
   expect_identical(my_budget$df,
-                   data.frame( date = as.Date(c("2015-12-15", "2015-12-20", "2015-12-31", "2016-01-01", "2016-01-05", "2016-01-31", "2016-02-01", "2016-02-05", "2016-02-29", "2016-03-01"))
-                             , name = c("Initial Amount", "Christmas Gifts", "Car", "Paycheck", "Rent", "Car", "Paycheck", "Rent", "Car", "Paycheck")
-                             , amount = c(1000, -500, -200, 1000, -500, -200, 1000, -500, -200, 1000)
-                             , recurring = c(FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)
-                             , balance = c(1000, 500, 300, 1300, 800, 600, 1600, 1100, 900, 1900)
+                   data.frame( date = as.Date(c("2015-12-15", "2015-12-20", "2015-12-25", "2015-12-31", "2016-01-01", "2016-01-05", "2016-01-31", "2016-02-01", "2016-02-05", "2016-02-29", "2016-03-01"))
+                             , name = c("Initial Amount", "Christmas Gifts", "Christmas Bonus", "Car", "Paycheck", "Rent", "Car", "Paycheck", "Rent", "Car", "Paycheck")
+                             , amount = c(1000, -500, 300, -200, 1000, -500, -200, 1000, -500, -200, 1000)
+                             , recurring = c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)
+                             , balance = c(1000, 500, 800, 600, 1600, 1100, 900, 1900, 1400, 1200, 2200)
                              , stringsAsFactors = FALSE
                              ))
 })

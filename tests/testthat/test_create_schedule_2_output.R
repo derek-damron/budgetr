@@ -16,7 +16,8 @@ test_that("Check - Items", {
   expect_identical(is.schedule(my_bills_items), TRUE)
   expect_identical(is.list(my_bills_items), TRUE)
   expect_identical(my_bills_items$df,
-                   data.frame( name = c("Paycheck", "Rent")
+                   data.frame( id = 1:2
+                             , name = c("Paycheck", "Rent")
                              , amount = c(1000, -500)
                              , day = c("1", "5")
                              , recurring = c(TRUE, TRUE)
@@ -30,7 +31,8 @@ test_that("Check - List", {
   expect_identical(is.schedule(my_bills_list), TRUE)
   expect_identical(is.list(my_bills_list), TRUE)
   expect_identical(my_bills_list$df,
-                   data.frame( name = c("Paycheck", "Rent")
+                   data.frame( id = 1:2
+                             , name = c("Paycheck", "Rent")
                              , amount = c(1000, -500)
                              , day = c("1", "5")
                              , recurring = c(TRUE, TRUE)

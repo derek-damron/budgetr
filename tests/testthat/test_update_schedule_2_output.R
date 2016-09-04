@@ -17,7 +17,8 @@ test_that("Check - nothing", {
   expect_identical(is.schedule(my_schedule), TRUE)
   expect_identical(is.list(my_schedule), TRUE)
   expect_identical(my_schedule$df,
-                   data.frame( name = c("Paycheck", "Rent")
+                   data.frame( id = 1:2
+                             , name = c("Paycheck", "Rent")
                              , amount = c(1000, -500)
                              , day = c("1", "5")
                              , recurring = c(TRUE, TRUE)
@@ -35,7 +36,8 @@ test_that("Check - add", {
   expect_identical(is.schedule(my_schedule), TRUE)
   expect_identical(is.list(my_schedule), TRUE)
   expect_identical(my_schedule$df,
-                   data.frame( name = c("Paycheck", "Rent", "Internet")
+                   data.frame( id = 1:3
+                             , name = c("Paycheck", "Rent", "Internet")
                              , amount = c(1000, -500, -100)
                              , day = c("1", "5", "15")
                              , recurring = c(TRUE, TRUE, TRUE)
@@ -48,7 +50,8 @@ test_that("Check - remove", {
   expect_identical(is.schedule(my_schedule), TRUE)
   expect_identical(is.list(my_schedule), TRUE)
   expect_identical(my_schedule$df,
-                   data.frame( name = "Paycheck"
+                   data.frame( id = 1L
+                             , name = "Paycheck"
                              , amount = 1000
                              , day = "1"
                              , recurring = TRUE
@@ -66,7 +69,8 @@ test_that("Check - both", {
   expect_identical(is.schedule(my_schedule), TRUE)
   expect_identical(is.list(my_schedule), TRUE)
   expect_identical(my_schedule$df,
-                   data.frame( name = c("Rent", "Internet")
+                   data.frame( id = 1:2
+                             , name = c("Rent", "Internet")
                              , amount = c(-500, -100)
                              , day = c("5", "15")
                              , recurring = c(TRUE, TRUE)

@@ -52,13 +52,17 @@ create_schedule <- function(...) {
     # Create schedule
     items_dfs <- lapply(items, function(x) {x$df})
     schedule_df <- do.call(rbind, items_dfs)
-    #schedule_df <- schedule_df[order(as.numeric(schedule_df$day)), ]
-    schedule <- list(df = schedule_df)
 
-    # Save the item list
-    schedule$items <- items
+    # Add an id column for proper tracing
+    df_cols <- names(schedule_df)
+    schedule_df$id <- 1:nrow(schedule_df)
+    # Put id as the first column
+    schedule_df <- schedule_df[c("id", df_cols)]
 
     # Objectify!
+    schedule <- list( df = schedule_df
+                    , items = items
+                    )
     class(schedule) <- c("schedule", "list")
     schedule
 }

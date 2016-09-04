@@ -108,8 +108,12 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
     # Subset based on budget first/last days
     budget <- subset(budget, day_mapped >= budget_day_first)
     budget <- subset(budget, day_mapped <= budget_day_last)
+
     # Subset based on actual last day
     budget <- subset(budget, !(day == "last" & day_mapped != actual_day_last))
+
+    # Subset based on recurring
+    budget <- subset(budget, recurring | (!recurring & !duplicated(id)))
 
     # Derive the date for each row
     budget$date <- with(budget, as.Date( paste(budget_year, budget_month, day_mapped, sep="-")

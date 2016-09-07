@@ -33,7 +33,7 @@ This introductory vignette provides a brief description of the functions provide
 1. **Items**: The individual pieces that make up your budget.
     - E.g. pay checks, rent, groceries
 2. **Schedules**: A collection of **items** that detail your cash flow.
-3. **Budgets**: A **schedule** that has been applied over a set period of time.
+3. **Budgets**: A **schedule** that has been applied over a set period of time with a certain initial amount.
 
 ## A Quick Example
 
@@ -92,4 +92,127 @@ Looks like you're netting $400 a month, but let's plot it out to get a visual!
 plot(your_budget)
 ```
 
-Check out the documentation pages for these functions for more information on their defaults and uses!  More functions and flexibility will be coming soon!
+## A Realistic Example
+
+In reality we have a lot more than three items in our budget.  Let's say that we *actually* have 
+the following things in our budget for the next few months:
+
+* Paychecks on the 1st and 15th of each month
+* Groceries on the 1st, 8th, 15th, and 22th of each month
+* Rent on the 5th day of each month
+* Internet on the 15th of each month
+* Student loan on the 23rd of each month
+* Car payment on the last day of each month
+
+First we need to create those items:
+
+```{r, echo=FALSE}
+rm(list=ls())
+```
+
+```{r}
+# Paycheck items
+paycheck1 <- create_item( name = "Paycheck"
+                        , amount = 1000
+                        , day = 1
+                        , recurring = TRUE
+                        )
+paycheck15 <- create_item( name = "Paycheck"
+                         , amount = 1000
+                         , day = 15
+                         , recurring = TRUE
+                         )
+# Grocery items
+groceries1 <- create_item( name = "Groceries"
+                         , amount = -100
+                         , day = 1
+                         , recurring = TRUE
+                         )
+groceries8 <- create_item( name = "Groceries"
+                         , amount = -100
+                         , day = 8
+                         , recurring = TRUE
+                         )
+groceries15 <- create_item( name = "Groceries"
+                          , amount = -100
+                          , day = 15
+                          , recurring = TRUE
+                          )
+groceries22 <- create_item( name = "Groceries"
+                          , amount = -100
+                          , day = 22
+                          , recurring = TRUE
+                          )
+# Rent item
+rent <- create_item( name = "Rent"
+                   , amount = -500
+                   , day = 5
+                   , recurring = TRUE
+                   )
+# Internet item
+internet <- create_item( name = "Internet"
+                       , amount = -100
+                       , day = 15
+                       , recurring = TRUE
+                       )
+# Student loan item
+student_loan <- create_item( name = "Student Loan"
+                           , amount = -100
+                           , day = 23
+                           , recurring = TRUE
+                           )
+# Car item
+car <- create_item( name = "Car"
+                  , amount = -200
+                  , day = "last"
+                  , recurring = TRUE
+                  )
+```
+
+It would be a pain to have to type out all of those items, so let's use `get_items` to 
+grab all of the items in our environment to create our schedule!
+
+```{r}
+your_schedule <- create_schedule(get_items())
+```
+
+We then create our budget!
+
+```{r}
+your_budget <- create_budget(your_schedule, initial=2000)
+your_budget
+plot(your_budget)
+```
+
+#### Reusing in the future
+
+We'll need to recreate our budget every so often.  There are several ways to do so depending on
+your personal preference, which include but are not limited to:
+
+* Write an R script that you can use to recreate all of your items, schedules, and budgets when needed
+* Use base R functions like `save` and `saveRDS` to save a workspace with your items or to save your
+individual items, schedules, and budgets
+
+#### Updating objects
+
+But what if our rent goes up?  It's easy to update our `rent` item with the `update_item` function.
+Any arguments not specified (e.g. `name`) will be remain unchanged.
+
+```{r}
+rent <- update_item(rent, amount=-750)
+```
+
+We can then recreate our schedule and budget to see if anything substantial changed!
+
+```{r}
+your_schedule <- create_schedule(get_items())
+your_budget <- create_budget(your_schedule, initial=2000)
+your_budget
+plot(your_budget)
+```
+
+There are also functions to quickly update your existing schedules and budgets (e.g. for fast scenario
+testing):
+
+* `update_schedule` lets you quickly add and/or remove items from a particular schedule
+* `update_budget` lets you quickly change the start date, the end date, and/or the initial amount

@@ -8,6 +8,6 @@
 
 print.item <- function(x, ...) {
     writeLines("item (budgetr)")
-    print(x$df, row.names=FALSE)
+    print(as.data.frame(x), row.names=FALSE)
     invisible(NULL)
 }

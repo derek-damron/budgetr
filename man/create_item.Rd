@@ -7,14 +7,14 @@
 create_item(name, amount, day, recurring)
 }
 \arguments{
-\item{name}{A name describing the budget item.}
+\item{name}{The name describing the budget item.}
 
 \item{amount}{The amount associated with the budget item.  Positive values result in addition
 and negative values result in subtraction.}
 
 \item{day}{The day associated with the budget item.  See Details for more information.}
 
-\item{recurring}{Whether or not the budget item is recurring.}
+\item{recurring}{The frequency of recurrence for the budget item.  See Details for more information.}
 }
 \value{
 The output of \code{create_item} is a budget item.
@@ -23,30 +23,40 @@ The output of \code{create_item} is a budget item.
 \code{create_item} returns a budget item.
 }
 \details{
-An item's day argument must be one of these values:
+\strong{day}
+
+The day argument must be one of the following types:
 
 \itemize{
-  \item \strong{numeric}: An integer between 1 and 31 (depending on the month!)
-  \item \strong{character}: "last" (last day of the month)
+  \item A Date object
+  \item A character or numeric object that can be converted by lubridate's
+        \code{\link[lubridate]{ymd}} function.
+}
+
+\strong{recurring}
+
+No recurring argument means that the item is one-time (the default). If provided, recurring
+must be one of the following values:
+
+\itemize{
+  \item "daily" or "1 day" (recur every day)
+  \item "X days" (recur every X days)
+  \item "weekly" or "1 week" (recur every week)
+  \item "X weeks" (recur every X weeks)
+  \item "monthly" or "1 month" (recur every month)
+  \item "X months" (recur every X months)
+  \item "yearly" or "1 year" (recur every year)
+  \item "X years" (recur every X years)
 }
 }
 \examples{
 # Create a paycheck item
 paycheck <- create_item( name = "Paycheck"
                        , amount = 1000
-                       , day = 1
-                       , recurring = TRUE
+                       , day = "2016-01-01"
+                       , recurring = "monthly"
                        )
 # Inspect
 paycheck
-
-# Create a rent item
-rent <- create_item( name = "Rent"
-                   , amount = -500
-                   , day = 5
-                   , recurring = TRUE
-                   )
-# Inspect
-rent
 }
 

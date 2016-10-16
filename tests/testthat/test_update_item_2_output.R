@@ -1,85 +1,66 @@
 context('update_item - Output')
 
-name <- "Rent"
-amount <- -500
-day <- 1
-recurring <- TRUE
-rent <- create_item(name, amount, day, recurring)
+name <- "Paycheck"
+amount <- 1000
+day <- "2016-01-01"
+recurring <- "monthly"
+paycheck <- create_item(name, amount, day, recurring)
 
 test_that("Check - nothing", {
-  rent <- update_item(rent)
-  expect_identical(rent$df,
-                   data.frame( name = name
-                             , amount = amount
-                             , day = as.character(day)
-                             , recurring = recurring
-                             , stringsAsFactors = FALSE
-                             ))
+    paycheck <- update_item(paycheck)
+    expect_identical(paycheck$name, name)
+    expect_identical(paycheck$amount, amount)
+    expect_identical(paycheck$day, as.Date(day))
+    expect_identical(paycheck$recurring, recurring)
 })
 
-name_update <- "Rent 2"
-amount_update <- -750
-day_update <- 2
-recurring_update <- FALSE
+name_update <- "Paycheck 2"
+amount_update <- 1500
+day_update <- "2016-01-01"
+recurring_update <- "2 weeks"
 
 test_that("Check - name", {
-  rent <- update_item(rent, name = name_update)
-  expect_identical(rent$df,
-                   data.frame( name = name_update
-                             , amount = amount
-                             , day = as.character(day)
-                             , recurring = recurring
-                             , stringsAsFactors = FALSE
-                             ))
+    paycheck <- update_item(paycheck, name = name_update)
+    expect_identical(paycheck$name, name_update)
+    expect_identical(paycheck$amount, amount)
+    expect_identical(paycheck$day, as.Date(day))
+    expect_identical(paycheck$recurring, recurring)
 })
 
 test_that("Check - amount", {
-  rent <- update_item(rent, amount = amount_update)
-  expect_identical(rent$df,
-                   data.frame( name = name
-                             , amount = amount_update
-                             , day = as.character(day)
-                             , recurring = recurring
-                             , stringsAsFactors = FALSE
-                             ))
+    paycheck <- update_item(paycheck, amount = amount_update)
+    expect_identical(paycheck$name, name)
+    expect_identical(paycheck$amount, amount_update)
+    expect_identical(paycheck$day, as.Date(day))
+    expect_identical(paycheck$recurring, recurring)
 })
 
-
 test_that("Check - day", {
-  rent <- update_item(rent, day = day_update)
-  expect_identical(rent$df,
-                   data.frame( name = name
-                             , amount = amount
-                             , day = as.character(day_update)
-                             , recurring = recurring
-                             , stringsAsFactors = FALSE
-                             ))
+    paycheck <- update_item(paycheck, day = day_update)
+    expect_identical(paycheck$name, name)
+    expect_identical(paycheck$amount, amount)
+    expect_identical(paycheck$day, as.Date(day_update))
+    expect_identical(paycheck$recurring, recurring)
 })
 
 
 test_that("Check - recurring", {
-  rent <- update_item(rent, recurring = recurring_update)
-  expect_identical(rent$df,
-                   data.frame( name = name
-                             , amount = amount
-                             , day = as.character(day)
-                             , recurring = recurring_update
-                             , stringsAsFactors = FALSE
-                             ))
+    paycheck <- update_item(paycheck, recurring = recurring_update)
+    expect_identical(paycheck$name, name)
+    expect_identical(paycheck$amount, amount)
+    expect_identical(paycheck$day, as.Date(day))
+    expect_identical(paycheck$recurring, recurring_update)
 })
 
 test_that("Check - everything", {
-  rent <- update_item( rent
-                     , name = name_update
-                     , amount = amount_update
-                     , day = day_update
-                     , recurring = recurring_update
-                     )
-  expect_identical(rent$df,
-                   data.frame( name = name_update
-                             , amount = amount_update
-                             , day = as.character(day_update)
-                             , recurring = recurring_update
-                             , stringsAsFactors = FALSE
-                             ))
+    paycheck <- update_item( paycheck
+                           , name = name_update
+                           , amount = amount_update
+                           , day = day_update
+                           , recurring = recurring_update
+                           )
+    expect_identical(paycheck$name, name_update)
+    expect_identical(paycheck$amount, amount_update)
+    expect_identical(paycheck$day, as.Date(day_update))
+    expect_identical(paycheck$recurring, recurring_update)
 })

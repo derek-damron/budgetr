@@ -13,8 +13,8 @@
 #' # Create a paycheck item
 #' paycheck <- create_item( name = "Paycheck"
 #'                        , amount = 1000
-#'                        , day = 1
-#'                        , recurring = TRUE
+#'                        , day = "2016-01-01"
+#'                        , recurring = "monthly"
 #'                        )
 #' # Inspect
 #' paycheck
@@ -30,30 +30,30 @@ update_item <- function(item, name, amount, day, recurring) {
     # Check item
     if (missing(item)) {
         stop("Please provide a budget item to update", call.=FALSE)
-    } else if (length(item) != 1) {
-        stop("Only one budget item can be updated at a time", call.=FALSE)
+    # } else if (length(item) != 1) {
+    #     stop("Only one budget item can be updated at a time", call.=FALSE)
     } else if (!is.item(item)) {
         stop("item must be a budget item", call.=FALSE)
     }
 
     # Check name
     if (missing(name)) {
-        name <- item$df$name
+        name <- item$name
     }
 
     # Check amount
     if (missing(amount)) {
-        amount <- item$df$amount
+        amount <- item$amount
     }
 
     # Check day
     if (missing(day)) {
-        day <- item$df$day
+        day <- item$day
     }
 
     # Check recurring
     if (missing(recurring)) {
-        recurring <- item$df$recurring
+        recurring <- item$recurring
     }
 
     # Update item

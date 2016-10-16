@@ -19,14 +19,14 @@ The output of \code{create_schedule} is a budget item.
 # Create a paycheck item
 paycheck <- create_item( name = "Paycheck"
                        , amount = 1000
-                       , day = 1
-                       , recurring = TRUE
+                       , day = "2016-01-01"
+                       , recurring = "monthly"
                        )
 # Create a rent item
 rent <- create_item( name = "Rent"
                    , amount = -500
-                   , day = 5
-                   , recurring = TRUE
+                   , day = "2016-01-05"
+                   , recurring = "monthly"
                    )
 
 # Create a schedule
@@ -34,8 +34,8 @@ my_schedule <- create_schedule(paycheck, rent)
 # Inspect
 my_schedule
 
-# Using a list of items
-my_schedule <- create_schedule(list(paycheck, rent))
+# Using all items in the current environment
+my_schedule <- create_schedule(get_items())
 # Inspect
 my_schedule
 }

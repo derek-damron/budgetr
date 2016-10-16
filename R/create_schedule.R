@@ -9,14 +9,14 @@
 #' # Create a paycheck item
 #' paycheck <- create_item( name = "Paycheck"
 #'                        , amount = 1000
-#'                        , day = 1
-#'                        , recurring = TRUE
+#'                        , day = "2016-01-01"
+#'                        , recurring = "monthly"
 #'                        )
 #' # Create a rent item
 #' rent <- create_item( name = "Rent"
 #'                    , amount = -500
-#'                    , day = 5
-#'                    , recurring = TRUE
+#'                    , day = "2016-01-05"
+#'                    , recurring = "monthly"
 #'                    )
 #'
 #' # Create a schedule
@@ -24,8 +24,8 @@
 #' # Inspect
 #' my_schedule
 #'
-#' # Using a list of items
-#' my_schedule <- create_schedule(list(paycheck, rent))
+#' # Using all items in the current environment
+#' my_schedule <- create_schedule(get_items())
 #' # Inspect
 #' my_schedule
 
@@ -49,20 +49,20 @@ create_schedule <- function(...) {
         stop("At least one of the objects provided isn't a budget item", call.=FALSE)
     }
 
-    # Create schedule
-    items_dfs <- lapply(items, function(x) {x$df})
-    schedule_df <- do.call(rbind, items_dfs)
+    # # Create schedule
+    # items_dfs <- lapply(items, function(x) {x$df})
+    # schedule_df <- do.call(rbind, items_dfs)
+    #
+    # # Add an id column for proper tracing
+    # df_cols <- names(schedule_df)
+    # schedule_df$id <- 1:nrow(schedule_df)
+    # # Put id as the first column
+    # schedule_df <- schedule_df[c("id", df_cols)]
 
-    # Add an id column for proper tracing
-    df_cols <- names(schedule_df)
-    schedule_df$id <- 1:nrow(schedule_df)
-    # Put id as the first column
-    schedule_df <- schedule_df[c("id", df_cols)]
+    # Create schedule
+    schedule <- items
 
     # Objectify!
-    schedule <- list( df = schedule_df
-                    , items = items
-                    )
     class(schedule) <- c("schedule", "list")
     schedule
 }

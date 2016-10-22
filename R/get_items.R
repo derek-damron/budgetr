@@ -11,14 +11,14 @@
 #' # Create a paycheck item
 #' paycheck <- create_item( name = "Paycheck"
 #'                        , amount = 1000
-#'                        , day = 1
-#'                        , recurring = TRUE
+#'                        , day = "2016-01-01"
+#'                        , recurring = "monthly"
 #'                        )
 #' # Create a rent item
 #' rent <- create_item( name = "Rent"
 #'                    , amount = -500
-#'                    , day = 5
-#'                    , recurring = TRUE
+#'                    , day = "2016-01-05"
+#'                    , recurring = "monthly"
 #'                    )
 #'
 #' # Get all items

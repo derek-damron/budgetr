@@ -49,16 +49,6 @@ create_schedule <- function(...) {
         stop("At least one of the objects provided isn't a budget item", call.=FALSE)
     }
 
-    # # Create schedule
-    # items_dfs <- lapply(items, function(x) {x$df})
-    # schedule_df <- do.call(rbind, items_dfs)
-    #
-    # # Add an id column for proper tracing
-    # df_cols <- names(schedule_df)
-    # schedule_df$id <- 1:nrow(schedule_df)
-    # # Put id as the first column
-    # schedule_df <- schedule_df[c("id", df_cols)]
-
     # Create schedule
     schedule <- items
 

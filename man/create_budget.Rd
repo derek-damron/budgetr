@@ -9,9 +9,13 @@ create_budget(schedule, start = Sys.Date(), end = start + 90, initial = 0)
 \arguments{
 \item{schedule}{A budget schedule.}
 
-\item{start}{The start date for the budget.  The default is today's date.}
+\item{start}{The start date for the budget.  The default is today's date.  If provided must be
+either a Date object or a character or numeric object that can be converted by
+lubridate's \code{\link[lubridate]{ymd}} function.}
 
-\item{end}{The end date for the budget.  The default is 90 days after today's date.}
+\item{end}{The end date for the budget.  The default is 90 days after today's date.  If provided
+must be either a Date object or a character or numeric object that can be converted by
+lubridate's \code{\link[lubridate]{ymd}} function and be after the start date.}
 
 \item{initial}{The initial amount for the budget.  The default is 0.}
 }
@@ -25,21 +29,21 @@ The output of \code{create_budget} is a budget.
 # Create a paycheck item
 paycheck <- create_item( name = "Paycheck"
                        , amount = 1000
-                       , day = 1
-                       , recurring = TRUE
+                       , day = "2016-01-01"
+                       , recurring = "monthly"
                        )
 # Create a rent item
 rent <- create_item( name = "Rent"
                    , amount = -500
-                   , day = 5
-                   , recurring = TRUE
+                   , day = "2016-01-05"
+                   , recurring = "monthly"
                    )
 
 # Create a schedule
 my_schedule <- create_schedule(paycheck, rent)
 
 # Create a budget
-my_budget <- create_budget(my_schedule, initial=1000)
+my_budget <- create_budget(my_schedule, start="2016-01-01", initial=1000)
 # Inspect
 my_budget
 }

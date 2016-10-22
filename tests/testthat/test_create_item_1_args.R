@@ -44,7 +44,7 @@ test_that("Check - day", {
 
 test_that("Check - recurring", {
   expect_equal(create_item(name, amount, day)$recurring,
-               FALSE)
+               "no")
   expect_error(create_item(name, amount, day, recurring=1:2),
                "recurring must be a single value")
   expect_error(create_item(name, amount, day, recurring=1),

@@ -96,7 +96,7 @@ create_item <- function(name, amount, day, recurring) {
 
     # Check recurring
     if (missing(recurring)) {
-        recurring <- FALSE
+        recurring <- "no"
     } else if (length(recurring) != 1) {
         stop("recurring must be a single value", call.=FALSE)
     } else if (!is_valid_value_recurring(recurring)) {

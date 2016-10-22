@@ -1,4 +1,4 @@
-context("print_schedule")
+context("print.schedule")
 
 paycheck <- create_item( name = "Paycheck"
                        , amount = 1000

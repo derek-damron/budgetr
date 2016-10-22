@@ -13,7 +13,7 @@ extend_item <- function(item, start, end) {
         return(NULL)
     } else if (start <= day & day <= end) {
         # Derive time between day and end
-        item_int <- interval(start=day, end=end)
+        item_int <- lubridate::interval(start=day, end=end)
         if (as.numeric(recurring_period) == 0) {
             item_int_time <- 0
         } else {

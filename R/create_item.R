@@ -83,13 +83,13 @@ create_item <- function(name, amount, day, recurring) {
         stop("Please provide a day for the budget item", call.=FALSE)
     } else if (length(day) != 1) {
         stop("day must be a single value", call.=FALSE)
-    } else if (!is.Date(day)) {
+    } else if (!lubridate::is.Date(day)) {
         # Try to convert to a Date using lubridate::ymd
         day <- tryCatch( lubridate::ymd(day)
                        , warning = function(w) day
                        , error = function(e) day
                        )
-        if (!is.Date(day)) {
+        if (!lubridate::is.Date(day)) {
             stop("Could not convert day into a Date object using lubridate::ymd", call.=FALSE)
         }
     }

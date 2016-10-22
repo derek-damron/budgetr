@@ -45,13 +45,13 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
     # Check start
     if (length(start) != 1) {
         stop("start must be a single value", call.=FALSE)
-    } else if (!is.Date(start)) {
+    } else if (!lubridate::is.Date(start)) {
         # Try to convert to a Date using lubridate::ymd
         start <- tryCatch( lubridate::ymd(start)
                          , warning = function(w) start
                          , error = function(e) start
                          )
-        if (!is.Date(start)) {
+        if (!lubridate::is.Date(start)) {
             stop("Could not convert start into a Date object using lubridate::ymd", call.=FALSE)
         }
     }
@@ -59,13 +59,13 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
     # Check end
     if (length(end) != 1) {
         stop("end must be a single value", call.=FALSE)
-    } else if (!is.Date(end)) {
+    } else if (!lubridate::is.Date(end)) {
         # Try to convert to a Date using lubridate::ymd
         end <- tryCatch( lubridate::ymd(end)
                        , warning = function(w) end
                        , error = function(e) end
                        )
-        if (!is.Date(end)) {
+        if (!lubridate::is.Date(end)) {
             stop("Could not convert end into a Date object using lubridate::ymd", call.=FALSE)
         }
     }

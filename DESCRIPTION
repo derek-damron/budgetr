@@ -4,7 +4,7 @@ Version: 0.2.2
 Authors@R: person("Derek", "Damron", email = "damrondm@gmail.com", role = c("aut", "cre"))
 Description: Easy budgeting in R.
 Depends:
-    R (>= 3.2.2)
+    R (>= 3.2.2),
     lubridate
 License: file LICENSE
 LazyData: true

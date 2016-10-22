@@ -75,7 +75,7 @@ plot.budget <- function(x, ...) {
          )
 
     # >= 0 points
-    with( x_rollup[x_rollup$balance >= 0]
+    with( x_rollup[x_rollup$balance >= 0,]
         , points( x = date
                 , y = balance
                 , pch = 16
@@ -84,7 +84,7 @@ plot.budget <- function(x, ...) {
         )
 
     # < 0 points
-    with( x_rollup[x_rollup$balance < 0]
+    with( x_rollup[x_rollup$balance < 0,]
         , points( x = date
                 , y = balance
                 , pch = 16

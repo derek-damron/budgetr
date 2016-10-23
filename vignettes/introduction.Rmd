@@ -13,7 +13,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include=FALSE}
 # Load libraries
 library(budgetr)
 library(pander)
@@ -26,7 +26,7 @@ library(knitr)
 
 This introductory vignette provides a brief description of the functions provided by *budgetr* along with some simple examples on how to construct your budget.  Please refer to the function documentation for more technical information on each of these functions.
 
-## Deconstructing a Budget
+## Building a Budget
 
 *budgetr* makes it easy to extend your recurring monthly cash flow out over time.  To do this, *budgetr* uses three primary abstractions:
 
@@ -37,9 +37,7 @@ This introductory vignette provides a brief description of the functions provide
 
 ## A Quick Example
 
-Let's consider a simple example to illustrate these abstractions.
-
-Say that you have three things that constitute your monthly budget:
+Say that you're budgeting for 2017 and you have three things that constitute your monthly budget:
 
 1. Your monthly paycheck paid on the first day of each month
 2. Your rent payment due on the fifth day of each month
@@ -51,20 +49,20 @@ Your first step in budgeting is to create the items themselves, which you can do
 # Create a paycheck item
 paycheck <- create_item( name = "Paycheck"
                        , amount = 1000
-                       , day = 1
-                       , recurring = TRUE
+                       , day = "2017-01-01"
+                       , recurring = "monthly"
                        )
 # Create a rent item
 rent <- create_item( name = "Rent"
                    , amount = -500
-                   , day = 5
-                   , recurring = TRUE
+                   , day = "2017-01-05"
+                   , recurring = "monthly"
                    )
 # Create an internet item
 internet <- create_item( name = "Internet"
                        , amount = -100
-                       , day = 15
-                       , recurring = TRUE
+                       , day = "2017-01-05"
+                       , recurring = "monthly"
                        )
 ```
 
@@ -77,7 +75,7 @@ your_schedule <- create_schedule(paycheck, rent, internet)
 Lastly (but not leastly!) you need to create your budget, which you can do with the `create_budget` function:
 
 ```{r}
-your_budget <- create_budget(your_schedule, initial=1000)
+your_budget <- create_budget(your_schedule, start="2017-01-01", initial=1000)
 ```
 
 Let's see what it looks like!
@@ -98,11 +96,11 @@ In reality we have a lot more than three items in our budget.  Let's say that we
 the following things in our budget for the next few months:
 
 * Paychecks on the 1st and 15th of each month
-* Groceries on the 1st, 8th, 15th, and 22th of each month
+* Groceries every week
 * Rent on the 5th day of each month
 * Internet on the 15th of each month
 * Student loan on the 23rd of each month
-* Car payment on the last day of each month
+* Car payment on the 25th of each month
 
 First we need to create those items:
 
@@ -114,58 +112,43 @@ rm(list=ls())
 # Paycheck items
 paycheck1 <- create_item( name = "Paycheck"
                         , amount = 1000
-                        , day = 1
-                        , recurring = TRUE
+                        , day = "2017-01-01"
+                        , recurring = "monthly"
                         )
 paycheck15 <- create_item( name = "Paycheck"
                          , amount = 1000
-                         , day = 15
-                         , recurring = TRUE
+                         , day = "2017-01-15"
+                         , recurring = "monthly"
                          )
 # Grocery items
-groceries1 <- create_item( name = "Groceries"
-                         , amount = -100
-                         , day = 1
-                         , recurring = TRUE
-                         )
-groceries8 <- create_item( name = "Groceries"
-                         , amount = -100
-                         , day = 8
-                         , recurring = TRUE
-                         )
-groceries15 <- create_item( name = "Groceries"
-                          , amount = -100
-                          , day = 15
-                          , recurring = TRUE
-                          )
-groceries22 <- create_item( name = "Groceries"
-                          , amount = -100
-                          , day = 22
-                          , recurring = TRUE
-                          )
+groceries <- create_item( name = "Groceries"
+                        , amount = -100
+                        , day = "2017-01-01"
+                        , recurring = "weekly"
+                        )
 # Rent item
 rent <- create_item( name = "Rent"
                    , amount = -500
-                   , day = 5
-                   , recurring = TRUE
+                   , day = "2017-01-05"
+                   , recurring = "monthly"
                    )
 # Internet item
 internet <- create_item( name = "Internet"
                        , amount = -100
-                       , day = 15
-                       , recurring = TRUE
+                       , day = "2017-01-15"
+                       , recurring = "monthly"
                        )
 # Student loan item
 student_loan <- create_item( name = "Student Loan"
                            , amount = -100
-                           , day = 23
-                           , recurring = TRUE
+                           , day = "2017-01-23"
+                           , recurring = "monthly"
                            )
 # Car item
 car <- create_item( name = "Car"
                   , amount = -200
-                  , day = "last"
-                  , recurring = TRUE
+                  , day = "2017-01-25"
+                  , recurring = "monthly"
                   )
 ```
 
@@ -179,7 +162,7 @@ your_schedule <- create_schedule(get_items())
 We then create our budget!
 
 ```{r}
-your_budget <- create_budget(your_schedule, initial=2000)
+your_budget <- create_budget(your_schedule, start="2017-01-01", initial=2000)
 your_budget
 plot(your_budget)
 ```
@@ -202,11 +185,11 @@ Any arguments not specified (e.g. `name`) will be remain unchanged.
 rent <- update_item(rent, amount=-750)
 ```
 
-We can then recreate our schedule and budget to see if anything substantial changed!
+We can then recreate our schedule (using the `get_items()` function to include all items in our current environment) and budget to see if anything substantial changed!
 
 ```{r}
 your_schedule <- create_schedule(get_items())
-your_budget <- create_budget(your_schedule, initial=2000)
+your_budget <- create_budget(your_schedule, start="2017-01-01", initial=2000)
 your_budget
 plot(your_budget)
 ```
@@ -214,5 +197,19 @@ plot(your_budget)
 There are also functions to quickly update your existing schedules and budgets (e.g. for fast scenario
 testing):
 
-* `update_schedule` lets you quickly add and/or remove items from a particular schedule
-* `update_budget` lets you quickly change the start date, the end date, and/or the initial amount
+* `update_schedule` lets you quickly add and/or remove items from a particular schedule.  For example, say that you forgot to include the deposit for a late-received Christmas present: 
+
+```{r}
+xmas_present <- create_item( name = "Xmas Present"
+                           , amount = 200
+                           , day = "2017-01-01"
+                           )
+your_schedule_updated <- update_schedule(your_schedule, add=xmas_present)
+```
+
+* `update_budget` lets you quickly change the start date, the end date, and/or the initial amount.  For example, say that you wanted to update `your_budget` to apply through the end of 2017:
+
+```{r}
+your_budget_2017 <- update_budget(your_budget, end="2017-12-31")
+plot(your_budget_2017)
+```

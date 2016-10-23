@@ -1,4 +1,4 @@
-context("plot_budget - Arguments")
+context("plot.budget - Arguments")
 
 test_that("Check", {
   expect_error(plot.budget(),

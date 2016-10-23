@@ -7,7 +7,12 @@
 #' @export
 
 print.schedule <- function(x, ...) {
+    # Prettify items into a data.frame
+    x_df <- lapply(x, as.data.frame)
+    x_df <- do.call(rbind, x_df)
+
+    # Print
     writeLines("schedule (budgetr)")
-    print(x$df, row.names=FALSE)
+    print(x_df, row.names=FALSE)
     invisible(NULL)
 }

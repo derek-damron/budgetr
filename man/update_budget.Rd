@@ -9,11 +9,11 @@ update_budget(budget, start, end, initial)
 \arguments{
 \item{budget}{The budget to be updated.}
 
-\item{start}{The new start date for the budget.}
+\item{start}{The new start date for the budget (if applicable).}
 
-\item{end}{The new end date for the budget.}
+\item{end}{The new end date for the budget (if applicable).}
 
-\item{initial}{The new initial amount for the budget.}
+\item{initial}{The new initial amount for the budget (if applicable).}
 }
 \value{
 The output of \code{update_budget} is a new budget with the specified updates.
@@ -25,20 +25,19 @@ The output of \code{update_budget} is a new budget with the specified updates.
 # Create a paycheck item
 paycheck <- create_item( name = "Paycheck"
                        , amount = 1000
-                       , day = 1
-                       , recurring = TRUE
+                       , day = "2016-01-01"
+                       , recurring = "monthly"
                        )
 # Create a rent item
 rent <- create_item( name = "Rent"
                    , amount = -500
-                   , day = 5
-                   , recurring = TRUE
+                   , day = "2016-01-05"
+                   , recurring = "monthly"
                    )
-
 # Create a schedule
 my_schedule <- create_schedule(paycheck, rent)
-#' # Create a budget
-my_budget <- create_budget(my_schedule, initial=1000)
+# Create a budget
+my_budget <- create_budget(my_schedule, start="2016-01-01", initial=1000)
 # Inspect
 my_budget
 

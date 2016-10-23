@@ -23,14 +23,14 @@ The output of \code{update_schedule} is a new budget schedule with the specified
 # Create a paycheck item
 paycheck <- create_item( name = "Paycheck"
                        , amount = 1000
-                       , day = 1
-                       , recurring = TRUE
+                       , day = "2016-01-01"
+                       , recurring = "monthly"
                        )
 # Create a rent item
 rent <- create_item( name = "Rent"
                    , amount = -500
-                   , day = 5
-                   , recurring = TRUE
+                   , day = "2016-01-05"
+                   , recurring = "monthly"
                    )
 
 # Create a schedule
@@ -41,8 +41,8 @@ my_schedule
 # Add an internet item to the schedule
 internet <- create_item( name = "Internet"
                        , amount = -100
-                       , day = 15
-                       , recurring = TRUE
+                       , day = "2016-01-15"
+                       , recurring = "monthly"
                        )
 my_schedule <- update_schedule(my_schedule, add=internet)
 # Inspect

@@ -2,38 +2,48 @@
 #'
 #' \code{create_item} returns a budget item.
 #'
-#' An item's day argument must be one of these values:
+#' \strong{day}
+#'
+#' The day argument must be one of the following types:
 #'
 #' \itemize{
-#'   \item \strong{numeric}: An integer between 1 and 31 (depending on the month!)
-#'   \item \strong{character}: "last" (last day of the month)
+#'   \item A Date object
+#'   \item A character or numeric object that can be converted by lubridate's
+#'         \code{\link[lubridate]{ymd}} function.
 #' }
 #'
-#' @param name A name describing the budget item.
+#' \strong{recurring}
+#'
+#' No recurring argument means that the item is one-time (the default). If provided, recurring
+#' must be one of the following values:
+#'
+#' \itemize{
+#'   \item "daily" or "1 day" (recur every day)
+#'   \item "X days" (recur every X days)
+#'   \item "weekly" or "1 week" (recur every week)
+#'   \item "X weeks" (recur every X weeks)
+#'   \item "monthly" or "1 month" (recur every month)
+#'   \item "X months" (recur every X months)
+#'   \item "yearly" or "1 year" (recur every year)
+#'   \item "X years" (recur every X years)
+#' }
+#'
+#' @param name The name describing the budget item.
 #' @param amount The amount associated with the budget item.  Positive values result in addition
 #'   and negative values result in subtraction.
 #' @param day The day associated with the budget item.  See Details for more information.
-#' @param recurring Whether or not the budget item is recurring.
+#' @param recurring The frequency of recurrence for the budget item.  See Details for more information.
 #' @return The output of \code{create_item} is a budget item.
 #' @export
 #' @examples
 #' # Create a paycheck item
 #' paycheck <- create_item( name = "Paycheck"
 #'                        , amount = 1000
-#'                        , day = 1
-#'                        , recurring = TRUE
+#'                        , day = "2016-01-01"
+#'                        , recurring = "monthly"
 #'                        )
 #' # Inspect
 #' paycheck
-#'
-#' # Create a rent item
-#' rent <- create_item( name = "Rent"
-#'                    , amount = -500
-#'                    , day = 5
-#'                    , recurring = TRUE
-#'                    )
-#' # Inspect
-#' rent
 
 create_item <- function(name, amount, day, recurring) {
     # Check name
@@ -42,7 +52,14 @@ create_item <- function(name, amount, day, recurring) {
     } else if (length(name) != 1) {
         stop("name must be a single value", call.=FALSE)
     } else if (!is.character(name)) {
-        name <- as.character(name)
+        # Try to convert to a character
+        name <- tryCatch( as.character(name)
+                        , warning = function(w) name
+                        , error = function(e) name
+                        )
+        if (!is.character(name)) {
+            stop("Could not convert name into a character value", call.=FALSE)
+        }
     }
 
     # Check amount
@@ -51,7 +68,14 @@ create_item <- function(name, amount, day, recurring) {
     } else if (length(amount) != 1) {
         stop("amount must be a single value", call.=FALSE)
     } else if (!is.numeric(amount)) {
-        stop("amount must be a numeric value", call.=FALSE)
+        # Try to convert to a numeric
+        amount <- tryCatch( as.numeric(amount)
+                          , warning = function(w) amount
+                          , error = function(e) amount
+                          )
+        if (!is.numeric(amount)) {
+            stop("Could not convert amount into a numeric value", call.=FALSE)
+        }
     }
 
     # Check day
@@ -59,27 +83,32 @@ create_item <- function(name, amount, day, recurring) {
         stop("Please provide a day for the budget item", call.=FALSE)
     } else if (length(day) != 1) {
         stop("day must be a single value", call.=FALSE)
-    } else if (!is.character(day)) {
-        day <- as.character(day)
+    } else if (!lubridate::is.Date(day)) {
+        # Try to convert to a Date using lubridate::ymd
+        day <- tryCatch( lubridate::ymd(day)
+                       , warning = function(w) day
+                       , error = function(e) day
+                       )
+        if (!lubridate::is.Date(day)) {
+            stop("Could not convert day into a Date object using lubridate::ymd", call.=FALSE)
+        }
     }
 
     # Check recurring
     if (missing(recurring)) {
-        stop("Please note whether the budget item is recurring", call.=FALSE)
+        recurring <- "no"
     } else if (length(recurring) != 1) {
         stop("recurring must be a single value", call.=FALSE)
-    } else if (! recurring %in% c(TRUE, FALSE)) {
-        stop("recurring must be TRUE or FALSE", call.=FALSE)
+    } else if (!is_valid_value_recurring(recurring)) {
+        stop("recurring is not a recognized value, see Details in ?create_item for possible values", call.=FALSE)
     }
 
     # Create item
-    item_df <- data.frame( name = name
-                         , amount = amount
-                         , day = day
-                         , recurring = recurring
-                         , stringsAsFactors = FALSE
-                         )
-    item <- list(df = item_df)
+    item <- list( name = name
+                , amount = amount
+                , day = day
+                , recurring = recurring
+                )
 
     # Objectify!
     class(item) <- c("item", "list")

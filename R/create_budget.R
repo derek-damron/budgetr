@@ -3,8 +3,12 @@
 #' \code{create_budget} returns a budget.
 #'
 #' @param schedule A budget schedule.
-#' @param start The start date for the budget.  The default is today's date.
-#' @param end The end date for the budget.  The default is 90 days after today's date.
+#' @param start The start date for the budget.  The default is today's date.  If provided must be
+#'              either a Date object or a character or numeric object that can be converted by
+#'              lubridate's \code{\link[lubridate]{ymd}} function.
+#' @param end The end date for the budget.  The default is 90 days after today's date.  If provided
+#'            must be either a Date object or a character or numeric object that can be converted by
+#'            lubridate's \code{\link[lubridate]{ymd}} function and be after the start date.
 #' @param initial The initial amount for the budget.  The default is 0.
 #' @return The output of \code{create_budget} is a budget.
 #' @export
@@ -12,21 +16,21 @@
 #' # Create a paycheck item
 #' paycheck <- create_item( name = "Paycheck"
 #'                        , amount = 1000
-#'                        , day = 1
-#'                        , recurring = TRUE
+#'                        , day = "2016-01-01"
+#'                        , recurring = "monthly"
 #'                        )
 #' # Create a rent item
 #' rent <- create_item( name = "Rent"
 #'                    , amount = -500
-#'                    , day = 5
-#'                    , recurring = TRUE
+#'                    , day = "2016-01-05"
+#'                    , recurring = "monthly"
 #'                    )
 #'
 #' # Create a schedule
 #' my_schedule <- create_schedule(paycheck, rent)
 #'
 #' # Create a budget
-#' my_budget <- create_budget(my_schedule, initial=1000)
+#' my_budget <- create_budget(my_schedule, start="2016-01-01", initial=1000)
 #' # Inspect
 #' my_budget
 
@@ -41,94 +45,68 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
     # Check start
     if (length(start) != 1) {
         stop("start must be a single value", call.=FALSE)
-    } else if (!is(start, "Date")) {
-        # Try to convert to date
-        stop("start must be a Date")
+    } else if (!lubridate::is.Date(start)) {
+        # Try to convert to a Date using lubridate::ymd
+        start <- tryCatch( lubridate::ymd(start)
+                         , warning = function(w) start
+                         , error = function(e) start
+                         )
+        if (!lubridate::is.Date(start)) {
+            stop("Could not convert start into a Date object using lubridate::ymd", call.=FALSE)
+        }
     }
 
     # Check end
     if (length(end) != 1) {
         stop("end must be a single value", call.=FALSE)
-    } else if (!is(end, "Date")) {
-        # Try to convert to date
-        stop("end must be a Date")
+    } else if (!lubridate::is.Date(end)) {
+        # Try to convert to a Date using lubridate::ymd
+        end <- tryCatch( lubridate::ymd(end)
+                       , warning = function(w) end
+                       , error = function(e) end
+                       )
+        if (!lubridate::is.Date(end)) {
+            stop("Could not convert end into a Date object using lubridate::ymd", call.=FALSE)
+        }
     }
     if (start >= end) {
         stop("end must be at least one day after start", call.=FALSE)
     }
 
     # Check initial
-    if (length(initial) != 1) {
+    if (missing(initial)) {
+        stop("Please provide an initial amount for the budget", call.=FALSE)
+    } else if (length(initial) != 1) {
         stop("initial must be a single value", call.=FALSE)
     } else if (!is.numeric(initial)) {
-        stop("initial must be a numeric value", call.=FALSE)
+        # Try to convert to a numeric
+        initial <- tryCatch( as.numeric(initial)
+                           , warning = function(w) initial
+                           , error = function(e) initial
+                           )
+        if (!is.numeric(initial)) {
+            stop("Could not convert initial into a numeric value", call.=FALSE)
+        }
     }
 
     #####
     # Create the budget!
     #
 
-    # Set up a data.frame with all days within the budget range
-    budget <- data.frame(budget_date = seq(start, end, by=1))
-    budget$budget_year <- as.numeric(format(budget$budget_date, "%Y"))
-    budget$budget_month <- as.numeric(format(budget$budget_date, "%m"))
-    budget$budget_day <- as.numeric(format(budget$budget_date, "%d"))
+    # Extend schedule
+    schedule_extended <- lapply(schedule, extend_item, start=start, end=end)
 
-    # Aggregate and calculate the first/last included day of each month
-    budget <- aggregate( budget_day ~ budget_year + budget_month
-                       , budget
-                       , function(x) c(first = min(x), last = max(x))
-                       )
-    budget <- as.data.frame(as.list(budget), stringsAsFactors = FALSE)
-    budget <- budget[order(budget$budget_year, budget$budget_month), ]
-    names(budget) <- sub(".", "_", names(budget), fixed = TRUE)
+    # Collapse
+    budget <- do.call(rbind, schedule_extended)
 
-    # Derive the actual last day of each month in the budget
-    budget$actual_day_last <- with(budget, last_day_of_month(budget_year, budget_month))
-
-    # Create a new set of rows for each month/year combination
-    budget <- budget[ rep( 1:nrow(budget)
-                         , each = nrow(schedule$df)
-                         ), ]
-
-    # Add schedule columns (thank you R recycling!)
-    budget <- cbind(budget, schedule$df)
-
-    # Convert day into a numeric value based on year, month, first day, and last day!
-    budget$day_mapped <- with(budget, map_days( budget_year
-                                              , budget_month
-                                              , budget_day_first
-                                              , budget_day_last
-                                              , day
-                                              ))
-
-    # Remove rows where day_mapped is NA
-    budget <- subset(budget, !is.na(day_mapped))
-
-    # Subset based on budget first/last days
-    budget <- subset(budget, day_mapped >= budget_day_first)
-    budget <- subset(budget, day_mapped <= budget_day_last)
-
-    # Subset based on actual last day
-    budget <- subset(budget, !(day == "last" & day_mapped != actual_day_last))
-
-    # Subset based on recurring
-    budget <- subset(budget, recurring | (!recurring & !duplicated(id)))
-
-    # Derive the date for each row
-    budget$date <- with(budget, as.Date( paste(budget_year, budget_month, day_mapped, sep="-")
-                                              , format = "%Y-%m-%d"
-                                              ))
+    # Exit if budget is NULL (i.e. no item gets applied)
+    if (is.null(budget)) {
+        stop("No item in the schedule applies between start and end", call.=FALSE)
+    }
 
     # Sort on date
     budget <- budget[order(budget$date, decreasing = FALSE), ]
 
-    # Subset and reorder columns
-    budget <- subset(budget, select=c( date
-                                     , name
-                                     , amount
-                                     , recurring
-                                     ))
     # Initialize balance
     budget$balance <- NA_real_
 
@@ -136,7 +114,6 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
     initial_row <- data.frame( date = start
                              , name = "Initial Amount"
                              , amount = initial
-                             , recurring = FALSE
                              , balance = NA_real_
                              , stringsAsFactors = FALSE
                              )

@@ -1,10 +1,11 @@
 Package: budgetr
-Title: Simple framework for making budgets in R
-Version: 0.2.1
+Title: Easy budgeting in R
+Version: 0.2.2
 Authors@R: person("Derek", "Damron", email = "damrondm@gmail.com", role = c("aut", "cre"))
-Description: Simple framework for making budgets in R.
+Description: Easy budgeting in R.
 Depends:
-    R (>= 3.2.2)
+    R (>= 3.2.2),
+    lubridate
 License: file LICENSE
 LazyData: true
 RoxygenNote: 5.0.1

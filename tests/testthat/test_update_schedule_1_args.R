@@ -2,13 +2,13 @@ context("update_schedule - Arguments")
 
 paycheck <- create_item( name = "Paycheck"
                        , amount = 1000
-                       , day = 1
-                       , recurring = TRUE
+                       , day = "2016-01-01"
+                       , recurring = "monthly"
                        )
 rent <- create_item( name = "Rent"
                    , amount = -500
-                   , day = 5
-                   , recurring = TRUE
+                   , day = "2016-01-05"
+                   , recurring = "monthly"
                    )
 my_schedule <- create_schedule(paycheck, rent)
 

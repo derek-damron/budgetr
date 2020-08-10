@@ -46,4 +46,3 @@ my_budget <- update_budget(my_budget, initial=0)
 # Inspect
 my_budget
 }
-

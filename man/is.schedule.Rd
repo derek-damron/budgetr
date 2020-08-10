@@ -12,4 +12,3 @@ is.schedule(x)
 \description{
 \code{is.schedule} Checks if an object is a budget schedule.
 }
-

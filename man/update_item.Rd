@@ -40,4 +40,3 @@ paycheck <- update_item( paycheck
 # Inspect
 paycheck
 }
-

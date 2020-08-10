@@ -38,4 +38,3 @@ get_items()
 # Get only items matching "rent"
 get_items("rent")
 }
-

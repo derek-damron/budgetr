@@ -39,4 +39,3 @@ my_budget <- create_budget(my_schedule, start="2016-01-01", initial=1000)
 # Plot
 plot(my_budget)
 }
-

@@ -14,4 +14,3 @@
 \description{
 \code{print.schedule} prints a clean version of a budget schedule.
 }
-

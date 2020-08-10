@@ -59,4 +59,3 @@ paycheck <- create_item( name = "Paycheck"
 # Inspect
 paycheck
 }
-

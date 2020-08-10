@@ -14,4 +14,3 @@
 \description{
 \code{print.item} prints a clean version of a budget item.
 }
-

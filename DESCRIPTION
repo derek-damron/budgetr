@@ -4,10 +4,12 @@ Version: 0.2.2
 Authors@R: person("Derek", "Damron", email = "damrondm@gmail.com", role = c("aut", "cre"))
 Description: Easy budgeting in R.
 Depends:
-    R (>= 4.0.2),
+    R (>= 4.0.0),
     lubridate
 License: file LICENSE
 LazyData: true
 RoxygenNote: 7.1.1
-Suggests: testthat
+Suggests: 
+    testthat,
+    covr
 Imports: methods

@@ -53,3 +53,4 @@ my_schedule <- update_schedule(my_schedule, remove=internet)
 # Inspect
 my_schedule
 }
+

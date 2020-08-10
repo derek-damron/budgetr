@@ -12,3 +12,4 @@ is.budget(x)
 \description{
 \code{is.budget} Checks if an object is a budget.
 }
+

@@ -14,17 +14,17 @@
 #' @export
 #' @examples
 #' # Create a paycheck item
-#' paycheck <- create_item( name = "Paycheck"
-#'                        , amount = 1000
-#'                        , day = "2016-01-01"
-#'                        , recurring = "monthly"
-#'                        )
+#' paycheck <- create_item(name = "Paycheck",
+#'     amount = 1000,
+#'     day = "2016-01-01",
+#'     recurring = "monthly"
+#' )
 #' # Create a rent item
-#' rent <- create_item( name = "Rent"
-#'                    , amount = -500
-#'                    , day = "2016-01-05"
-#'                    , recurring = "monthly"
-#'                    )
+#' rent <- create_item(name = "Rent",
+#'     amount = -500,
+#'     day = "2016-01-05",
+#'     recurring = "monthly"
+#' )
 #'
 #' # Create a schedule
 #' my_schedule <- create_schedule(paycheck, rent)
@@ -47,10 +47,10 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
         stop("start must be a single value", call.=FALSE)
     } else if (!lubridate::is.Date(start)) {
         # Try to convert to a Date using lubridate::ymd
-        start <- tryCatch( lubridate::ymd(start)
-                         , warning = function(w) start
-                         , error = function(e) start
-                         )
+        start <- tryCatch(lubridate::ymd(start),
+            warning = function(w) start,
+            error = function(e) start
+        )
         if (!lubridate::is.Date(start)) {
             stop("Could not convert start into a Date object using lubridate::ymd", call.=FALSE)
         }
@@ -61,10 +61,10 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
         stop("end must be a single value", call.=FALSE)
     } else if (!lubridate::is.Date(end)) {
         # Try to convert to a Date using lubridate::ymd
-        end <- tryCatch( lubridate::ymd(end)
-                       , warning = function(w) end
-                       , error = function(e) end
-                       )
+        end <- tryCatch(lubridate::ymd(end),
+            warning = function(w) end,
+            error = function(e) end
+        )
         if (!lubridate::is.Date(end)) {
             stop("Could not convert end into a Date object using lubridate::ymd", call.=FALSE)
         }
@@ -80,10 +80,10 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
         stop("initial must be a single value", call.=FALSE)
     } else if (!is.numeric(initial)) {
         # Try to convert to a numeric
-        initial <- tryCatch( as.numeric(initial)
-                           , warning = function(w) initial
-                           , error = function(e) initial
-                           )
+        initial <- tryCatch(as.numeric(initial),
+            warning = function(w) initial,
+            error = function(e) initial
+        )
         if (!is.numeric(initial)) {
             stop("Could not convert initial into a numeric value", call.=FALSE)
         }
@@ -111,12 +111,12 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
     budget$balance <- NA_real_
 
     # Add initial row
-    initial_row <- data.frame( date = start
-                             , name = "Initial Amount"
-                             , amount = initial
-                             , balance = NA_real_
-                             , stringsAsFactors = FALSE
-                             )
+    initial_row <- data.frame(date = start,
+        name = "Initial Amount",
+        amount = initial,
+        balance = NA_real_,
+        stringsAsFactors = FALSE
+    )
     budget <- rbind(initial_row, budget)
 
     # Derive balance
@@ -129,13 +129,13 @@ create_budget <- function(schedule, start=Sys.Date(), end=start+90, initial=0) {
     # Objectify!
     #
 
-    budget <- list( df = budget
-                  , args = list( start = start
-                               , end = end
-                               , initial = initial
-                               )
-                  , schedule = schedule
-                  )
+    budget <- list(df = budget,
+        args = list(start = start,
+            end = end,
+            initial = initial
+        ),
+        schedule = schedule
+    )
     class(budget) <- c("budget", "list")
     budget
 }

@@ -1,0 +1,125 @@
+---
+description: Reformating files with normal new line wrapping
+globs: 
+alwaysApply: false
+---
+# R Code Line Wrapping Rules
+
+This document outlines the rules for line wrapping in R code.
+
+## Basic Rules
+
+1. Use 4 spaces for indentation (not tabs)
+2. Place commas at the end of lines (not the beginning)
+3. Align continued lines with 4-space indentation
+4. Place closing parentheses on their own line, aligned with the opening line
+
+## Examples
+
+### Function Calls
+
+```R
+# Good
+result <- function_name(arg1 = value1,
+    arg2 = value2,
+    arg3 = value3
+)
+
+# Bad (vertical alignment)
+result <- function_name(arg1 = value1
+                      , arg2 = value2
+                      , arg3 = value3
+                      )
+
+# Bad (no commas)
+result <- function_name(arg1 = value1
+    arg2 = value2
+    arg3 = value3
+)
+```
+
+### Data Frames
+
+```R
+# Good
+df <- data.frame(col1 = values1,
+    col2 = values2,
+    col3 = values3,
+    stringsAsFactors = FALSE
+)
+
+# Bad (vertical alignment)
+df <- data.frame(col1 = values1
+               , col2 = values2
+               , col3 = values3
+               , stringsAsFactors = FALSE
+               )
+```
+
+### Lists
+
+```R
+# Good
+my_list <- list(item1 = value1,
+    item2 = value2,
+    nested_list = list(subitem1 = subvalue1,
+        subitem2 = subvalue2
+    )
+)
+
+# Bad (vertical alignment)
+my_list <- list(item1 = value1
+              , item2 = value2
+              , nested_list = list(subitem1 = subvalue1
+                                , subitem2 = subvalue2
+                                )
+              )
+```
+
+### Control Structures
+
+```R
+# Good
+if (condition) {
+    result <- tryCatch(expression,
+        warning = function(w) handle_warning(w),
+        error = function(e) handle_error(e)
+    )
+}
+
+# Bad (vertical alignment)
+if (condition) {
+    result <- tryCatch(expression
+                     , warning = function(w) handle_warning(w)
+                     , error = function(e) handle_error(e)
+                     )
+}
+```
+
+## Implementation
+
+These rules can be implemented using the following patterns:
+
+1. For function calls:
+   - Start with the function name and opening parenthesis
+   - Each argument on its own line with 4-space indentation
+   - Comma at the end of each line (except the last)
+   - Closing parenthesis on its own line, aligned with the function name
+
+2. For data structures (data.frame, list):
+   - Start with the structure name and opening parenthesis
+   - Each element on its own line with 4-space indentation
+   - Comma at the end of each line (except the last)
+   - Closing parenthesis on its own line, aligned with the structure name
+
+3. For control structures:
+   - Start with the control keyword and opening parenthesis
+   - Each argument on its own line with 4-space indentation
+   - Comma at the end of each line (except the last)
+   - Closing parenthesis on its own line, aligned with the control keyword
+
+## Exceptions
+
+1. Short function calls with few arguments can stay on one line
+2. Simple assignments can stay on one line
+3. Very short lists or data frames can stay on one line
